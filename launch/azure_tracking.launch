@@ -1,0 +1,12 @@
+<launch>
+    <arg name="with_aruco" default="true"/>
+    <arg name="with_body" default="true"/>
+    <arg name="visualization" default="true"/>
+
+    <node name="azure_tracking" pkg="camera_tracking" type="azure_tracking_node.py" output="screen">
+        <param name="with_aruco" value="$(arg with_aruco)"/>
+        <param name="with_body" value="$(arg with_body)"/>
+        <param name="visualization" value="$(arg visualization)"/>
+    </node>
+
+</launch>
