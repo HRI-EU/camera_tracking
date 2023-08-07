@@ -40,6 +40,8 @@ from .camera_helper import load_camera_parameters
 
 class ArucoTracking:
     def __init__(self, camera_matrix, distortion_coefficients, visualize=True):
+        self.name = "aruco"
+
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         self.aruco_parameters = cv2.aruco.DetectorParameters()
 

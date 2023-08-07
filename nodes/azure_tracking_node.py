@@ -25,7 +25,7 @@ from camera_tracking.azure_tracking import AzureTracking
 class AzureTrackingNode:
     def __init__(self):
         self.azure_tracking = AzureTracking(
-            rospy.get_param("~with_aruco"), rospy.get_param("~with_body"), rospy.get_param("~visualization")
+            rospy.get_param("~with_aruco"), rospy.get_param("~with_body"), rospy.get_param("~visualize")
         )
         self.landmarks_publisher = rospy.Publisher("/azure_landmarks", std_msgs.msg.String, queue_size=1)
         rospy.loginfo("Initialization done.")
