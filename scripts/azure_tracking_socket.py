@@ -51,6 +51,7 @@ class AzureTrackingSocket:
         parser.add_argument("--standalone", default=False, action="store_true", help="run without networking")
         parser.add_argument("--aruco", default=False, action="store_true", help="enable tracking of aruco markers")
         parser.add_argument("--body", default=False, action="store_true", help="enable tracking of body skeleton")
+        parser.add_argument("--mediapipe", default=False, action="store_true", help="enable tracking with mediapipe")
         parser.add_argument("--visualize", default=False, action="store_true", help="visualize markers")
         parser.add_argument(
             "--log-level",
@@ -63,7 +64,9 @@ class AzureTrackingSocket:
 
         logging.basicConfig(format="%(levelname)s: %(message)s", level=args.log_level.upper())
 
-        self.azure_tracking = AzureTracking(args.aruco, args.body, args.visualize)
+        self.azure_tracking = AzureTracking(
+            with_aruco=args.aruco, with_body=args.body, with_mediapipe=args.mediapipe, visualize=args.visualize
+        )
         self.standalone = args.standalone
 
         if self.standalone:

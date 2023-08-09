@@ -32,9 +32,9 @@
 from typing import Dict
 import json
 import time
+import numpy
 import cv2
 import mediapipe as mp
-import numpy
 
 from camera_tracking.base_tracking import BaseTracking
 
@@ -111,7 +111,7 @@ class MediapipeTracking(BaseTracking):
     def __init__(self, visualize: bool = True):
         super().__init__("mediapipe", visualize=visualize)
 
-    def process(self, image: numpy.ndarray, options: Dict):
+    def process(self, image: numpy.ndarray, options: Dict = {"face": True, "hands": True}):
         """
         Process an image.
         @param image: The image to be processed. If the image is colored we assume BGR.
