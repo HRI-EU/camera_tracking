@@ -182,7 +182,7 @@ class AzureTracking:
         capture = self.device.update()
         self.sum_capture_time += time.time() - start_time
 
-        # Trigger trackers in order of expected processing time (decreasingly).
+        # Trigger trackers in given order (decreasing processing time).
         for tracker in self.trackers.values():
             tracker.trigger(capture)
 
