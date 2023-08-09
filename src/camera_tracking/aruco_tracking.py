@@ -35,12 +35,12 @@ import time
 import cv2
 import numpy
 
-from .camera_helper import load_camera_parameters
+from camera_tracking.camera_helper import load_camera_parameters
+from camera_tracking.base_tracking import BaseTracking
 
 
-class ArucoTracking:
-    def __init__(self, camera_matrix, distortion_coefficients, visualize=True):
-        self.name = "aruco"
+class ArucoTracking(BaseTracking):
+    def __init__(self, camera_matrix: numpy.ndarray, distortion_coefficients: numpy.ndarray, visualize: bool = True):
 
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         self.aruco_parameters = cv2.aruco.DetectorParameters()
@@ -50,11 +50,16 @@ class ArucoTracking:
 
         self.camera_matrix = camera_matrix
         self.distortion_coefficients = distortion_coefficients
-        self.visualize = visualize
-        self.visualization = None
-        self.sum_processing_time = 0.0
+
+        super().__init__("aruco", visualize=visualize)
 
     def process(self, image: numpy.ndarray) -> Dict:
+        """
+        Process an image.
+        @param image: The image to be processed. If the image is colored we assume BGR.
+        @return: The found aruco landmarks.
+        """
+
         start_time = time.time()
 
         # Find all markers in the image.
@@ -99,26 +104,20 @@ class ArucoTracking:
 
         return landmarks
 
-    def show_visualization(self):
-        if self.visualize:
-            cv2.namedWindow("Aruco tracking", cv2.WINDOW_NORMAL)
-            cv2.imshow("Aruco tracking", self.visualization)
-            cv2.waitKey(1)
-
 
 def main():
-    camera_parameters = load_camera_parameters("Logitech-C920.yaml")
-    image = cv2.imread("aruco_test.jpg")
+    camera_parameters = load_camera_parameters("data/Logitech-C920.yaml")
+    image = cv2.imread("data/aruco_test.jpg")
     aruco_tracking = ArucoTracking(camera_parameters["camera_matrix"], camera_parameters["distortion_coefficients"])
     landmarks = aruco_tracking.process(image)
     print(f"Landmarks are:\n{landmarks}")
 
     # Store the found landmarks.
-    with open("aruco_test_landmarks.json", "w") as file:
+    with open("data/aruco_test_landmarks.json", "w") as file:
         json.dump(landmarks, file)
 
     # Compare to reference landmarks.
-    with open("aruco_test_reference_landmarks.json") as file:
+    with open("data/aruco_test_reference_landmarks.json") as file:
         reference_landmarks = json.load(file)
     if landmarks != reference_landmarks:
         print(f"Mismatch detected. Reference landmarks are:\n{reference_landmarks}")
