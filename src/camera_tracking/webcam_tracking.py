@@ -55,14 +55,14 @@ class WebcamTracking:
         if with_mediapipe:
             from .mediapipe_tracking import MediapipeTracking
 
-            mediapipe_tracking = MediapipeTracking(visualize)
+            mediapipe_tracking = MediapipeTracking(visualize=visualize)
             self.trackers["mediapipe"] = ThreadedTracker(mediapipe_tracking, input_function=lambda capture: capture)
 
         if with_aruco:
             from .aruco_tracking import ArucoTracking
 
             aruco_tracking = ArucoTracking(
-                camera_parameters["camera_matrix"], camera_parameters["distortion_coefficients"], visualize
+                camera_parameters["camera_matrix"], camera_parameters["distortion_coefficients"], visualize=visualize
             )
             self.trackers["aruco"] = ThreadedTracker(aruco_tracking, input_function=lambda capture: capture)
 
@@ -70,7 +70,7 @@ class WebcamTracking:
         self.step_count = 0
         self.sum_overall_time = 0.0
         self.sum_capture_time = 0.0
-        self.report_interval = 20
+        self.report_interval = 30
 
     def step(self):
         start_time = time.time()
@@ -92,7 +92,6 @@ class WebcamTracking:
             tracker.tracker.show_visualization()
 
         self.sum_overall_time += time.time() - start_time
-        self.step_count += 1
         if self.step_count % self.report_interval == 0:
             status = (
                 f"Step {self.step_count} mean times: "
@@ -107,6 +106,8 @@ class WebcamTracking:
             print(status)
             self.sum_overall_time = 0.0
             self.sum_capture_time = 0.0
+
+        self.step_count += 1
 
         return landmarks
 

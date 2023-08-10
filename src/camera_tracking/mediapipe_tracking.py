@@ -29,7 +29,7 @@
 #  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-from typing import Dict
+from typing import Dict, NamedTuple, Optional
 import json
 import time
 import numpy
@@ -50,7 +50,7 @@ face_mesh = mp_face.FaceMesh(min_detection_confidence=0.5, min_tracking_confiden
 pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
 
-def face_to_dict(results_face) -> Dict:
+def face_to_dict(results_face: NamedTuple) -> Dict:
     # face_<face_index>_<landmark_index>, e.g. face_0_12
     landmarks = {}
     if results_face.multi_face_landmarks:
@@ -61,7 +61,7 @@ def face_to_dict(results_face) -> Dict:
     return landmarks
 
 
-def hands_to_dict(results_hands) -> Dict:
+def hands_to_dict(results_hands: NamedTuple) -> Dict:
     # hand_<hand_index>_<handedness>_<landmark_id>, e.g. hand_0_left_index_finger_pip
     landmarks = {}
     if results_hands.multi_hand_landmarks:
@@ -79,7 +79,7 @@ def hands_to_dict(results_hands) -> Dict:
     return landmarks
 
 
-def pose_to_dict(results_pose) -> Dict:
+def pose_to_dict(results_pose: NamedTuple) -> Dict:
     # pose_<landmark_id>, e.g. pose_right_shoulder
     landmarks = {}
     if results_pose.pose_world_landmarks:
@@ -108,16 +108,23 @@ def get_connections(connections) -> Dict:
 
 
 class MediapipeTracking(BaseTracking):
-    def __init__(self, visualize: bool = True):
+    default_options = {"face": True, "hands": True, "pose": True}
+
+    def __init__(self, options: Optional[Dict], visualize: bool = True):
+        self.options = self.default_options if options is None else options
         super().__init__("mediapipe", visualize=visualize)
 
-    def process(self, image: numpy.ndarray, options: Dict = {"face": True, "hands": True}):
+    def process(self, image: numpy.ndarray, options: Optional[Dict] = None):
         """
         Process an image.
         @param image: The image to be processed. If the image is colored we assume BGR.
+        @param options: A dictionary defining which landmarks to compute.
         @return: The found landmarks.
         """
         start_time = time.time()
+
+        if options is None:
+            options = self.default_options
 
         landmarks = {}
 

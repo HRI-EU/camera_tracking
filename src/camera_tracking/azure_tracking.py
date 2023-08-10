@@ -100,7 +100,9 @@ class AzureTracking:
 
         # Define the device configuration.
         device_config = pykinect.default_configuration
-        device_config.color_resolution = pykinect.K4A_COLOR_RESOLUTION_1536P
+        device_config.color_resolution = (
+            pykinect.K4A_COLOR_RESOLUTION_1536P if (with_aruco or with_mediapipe) else pykinect.K4A_COLOR_RESOLUTION_OFF
+        )
         device_config.depth_mode = pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED
         device_config.camera_fps = pykinect.K4A_FRAMES_PER_SECOND_30
 
@@ -111,13 +113,13 @@ class AzureTracking:
 
         # We add trackers in order of expected processing time (decreasingly).
         if with_body:
-            body_tracking = BodyTracking(visualize)
+            body_tracking = BodyTracking(visualize=visualize)
             self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))
 
         if with_mediapipe:
             from .mediapipe_tracking import MediapipeTracking
 
-            mediapipe_tracking = MediapipeTracking(visualize)
+            mediapipe_tracking = MediapipeTracking(visualize=visualize)
             self.trackers["mediapipe"] = ThreadedTracker(
                 mediapipe_tracking, input_function=lambda capture: capture.get_color_image()
             )
@@ -132,7 +134,7 @@ class AzureTracking:
             aruco_tracking = ArucoTracking(
                 color_camera_parameters["camera_matrix"],
                 color_camera_parameters["distortion_coefficients"],
-                visualize,
+                visualize=visualize,
             )
             self.trackers["aruco"] = ThreadedTracker(
                 aruco_tracking, input_function=lambda capture: capture.get_color_image()
@@ -142,7 +144,7 @@ class AzureTracking:
         self.step_count = 0
         self.sum_overall_time = 0.0
         self.sum_capture_time = 0.0
-        self.report_interval = 20
+        self.report_interval = 30
 
     def step(self) -> Dict:
         start_time = time.time()
@@ -164,7 +166,6 @@ class AzureTracking:
             tracker.tracker.show_visualization()
 
         self.sum_overall_time += time.time() - start_time
-        self.step_count += 1
         if self.step_count % self.report_interval == 0:
             status = (
                 f"Step {self.step_count} mean times: "
@@ -179,6 +180,8 @@ class AzureTracking:
             print(status)
             self.sum_overall_time = 0.0
             self.sum_capture_time = 0.0
+
+        self.step_count += 1
 
         return landmarks
 
