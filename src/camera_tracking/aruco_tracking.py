@@ -106,18 +106,18 @@ class ArucoTracking(BaseTracking):
 
 
 def main():
-    camera_parameters = load_camera_parameters("data/Logitech-C920.yaml")
-    image = cv2.imread("data/aruco_test.jpg")
+    camera_parameters = load_camera_parameters("data/calibration/Logitech-C920.yaml")
+    image = cv2.imread("data/test/aruco_test.jpg")
     aruco_tracking = ArucoTracking(camera_parameters["camera_matrix"], camera_parameters["distortion_coefficients"])
     landmarks = aruco_tracking.process(image)
     print(f"Landmarks are:\n{landmarks}")
 
     # Store the found landmarks.
-    with open("data/aruco_test_landmarks.json", "w") as file:
+    with open("data/test/aruco_test_landmarks.json", "w") as file:
         json.dump(landmarks, file)
 
     # Compare to reference landmarks.
-    with open("data/aruco_test_reference_landmarks.json") as file:
+    with open("data/test/aruco_test_reference_landmarks.json") as file:
         reference_landmarks = json.load(file)
     if landmarks != reference_landmarks:
         print(f"Mismatch detected. Reference landmarks are:\n{reference_landmarks}")

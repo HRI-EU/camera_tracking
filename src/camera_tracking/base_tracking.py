@@ -31,6 +31,10 @@
 #  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+
+import queue
+import threading
+from typing import Callable
 import cv2
 
 
@@ -47,3 +51,34 @@ class BaseTracking:
             cv2.namedWindow(self.window_name, cv2.WINDOW_NORMAL)
             cv2.imshow(self.window_name, self.visualization)
             cv2.waitKey(1)
+
+    def process(self, data):
+        raise NotImplementedError("Function 'process' is not implemented in the base class.")
+
+
+class ThreadedTracker:
+    def __init__(self, tracker: BaseTracking, input_function: Callable):
+        self.input_function = input_function
+        self.tracker = tracker
+        self.input = queue.Queue()
+        self.output = queue.Queue()
+        self.thread = threading.Thread(target=self.worker)
+        self.thread.start()
+
+    def worker(self):
+        while True:
+            success, data = self.input.get()
+            if not success:
+                print(f"Data is not available for {self.tracker.name}.")
+                self.output.put({})
+                continue
+
+            if data is None:
+                break
+
+            # Compute landmarks and put them into the output buffer.
+            landmarks = self.tracker.process(data)
+            self.output.put(landmarks)
+
+    def trigger(self, data):
+        self.input.put(self.input_function(data))

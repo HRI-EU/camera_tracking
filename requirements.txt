@@ -1,5 +1,5 @@
-mediapipe==0.8.11
-zmq==0.0.0
 git+https://github.com/ibaiGorordo/pyKinectAzure.git@0.0.3
 # This must come after pyKinectAzure to get back our desired opencv version.
 opencv-contrib-python~=4.8.0
+mediapipe==0.10.3
+zmq==0.0.0

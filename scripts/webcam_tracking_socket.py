@@ -34,17 +34,17 @@ import json
 import argparse
 import zmq
 
-from camera_tracking.azure_tracking import AzureTracking
+from camera_tracking.webcam_tracking import WebcamTracking
 
 
-class AzureTrackingSocket:
+class WebcamTrackingSocket:
     def __init__(self):
         parser = argparse.ArgumentParser(
-            formatter_class=argparse.ArgumentDefaultsHelpFormatter, description="Perception using Kinect Azure."
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter, description="Perception using webcam."
         )
+        parser.add_argument("camera_config_file", type=str, help="the config file of the camera to use")
         parser.add_argument("--standalone", default=False, action="store_true", help="run without networking")
         parser.add_argument("--aruco", default=False, action="store_true", help="enable tracking of aruco markers")
-        parser.add_argument("--body", default=False, action="store_true", help="enable tracking of body skeleton")
         parser.add_argument("--mediapipe", default=False, action="store_true", help="enable tracking with mediapipe")
         parser.add_argument("--visualize", default=False, action="store_true", help="visualize markers")
         parser.add_argument(
@@ -58,8 +58,8 @@ class AzureTrackingSocket:
 
         logging.basicConfig(format="%(levelname)s: %(message)s", level=args.log_level.upper())
 
-        self.azure_tracking = AzureTracking(
-            with_aruco=args.aruco, with_body=args.body, with_mediapipe=args.mediapipe, visualize=args.visualize
+        self.webcam_tracking = WebcamTracking(
+            args.camera_config_file, with_aruco=args.aruco, with_mediapipe=args.mediapipe, visualize=args.visualize
         )
         self.standalone = args.standalone
 
@@ -74,30 +74,30 @@ class AzureTrackingSocket:
             self.socket.bind("tcp://*:5555")
 
     def run(self):
-        while True:
+        while self.webcam_tracking.capture.isOpened():
             # Override request by client.
             if not self.standalone:
                 mediapipe_command = self.socket.recv()
                 logging.debug(f"Received request '{mediapipe_command}'.")
 
-            landmarks = self.azure_tracking.step()
+            landmarks = self.webcam_tracking.step()
 
             if not self.standalone:
                 json_object = json.dumps(landmarks)
                 self.socket.send_string(json_object)
 
     def stop(self):
-        self.azure_tracking.stop()
+        self.webcam_tracking.stop()
 
 
 def main():
-    azure_tracking = AzureTrackingSocket()
+    webcam_tracking = WebcamTrackingSocket()
     try:
-        azure_tracking.run()
+        webcam_tracking.run()
     except KeyboardInterrupt:
         pass
     finally:
-        azure_tracking.stop()
+        webcam_tracking.stop()
 
 
 if __name__ == "__main__":

@@ -102,7 +102,7 @@ def pose_to_dict(results_pose) -> Dict:
 def get_connections(connections) -> Dict:
     result_connections = {}
     for connection_index, connection_id in enumerate(connections):
-        result_connections[f"{connection_index}"] = {str(connection_id[0]), str(connection_id[1])}
+        result_connections[f"{connection_index}"] = [str(connection_id[0]), str(connection_id[1])]
 
     return result_connections
 
@@ -180,17 +180,17 @@ class MediapipeTracking(BaseTracking):
 
 
 def main():
-    image = cv2.imread("data/mediapipe_test.jpg")
+    image = cv2.imread("data/test/mediapipe_test.jpg")
     mediapipe_tracking = MediapipeTracking()
     landmarks = mediapipe_tracking.process(image, options={"face": True, "hands": True, "pose": True})
     print(f"Landmarks are:\n{landmarks}")
 
     # Store the found landmarks.
-    with open("data/mediapipe_test_landmarks.json", "w") as file:
+    with open("data/test/mediapipe_test_landmarks.json", "w") as file:
         json.dump(landmarks, file)
 
     # Compare to reference landmarks.
-    with open("data/mediapipe_test_reference_landmarks.json") as file:
+    with open("data/test/mediapipe_test_reference_landmarks.json") as file:
         reference_landmarks = json.load(file)
     if landmarks != reference_landmarks:
         print(f"Mismatch detected. Reference landmarks are:\n{reference_landmarks}")

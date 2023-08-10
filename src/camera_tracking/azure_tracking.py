@@ -31,12 +31,10 @@
 
 from typing import Dict
 from collections import OrderedDict
-import queue
-import threading
 import time
 import cv2
 
-from .base_tracking import BaseTracking
+from .base_tracking import BaseTracking, ThreadedTracker
 from .camera_helper import camera_parameters_from_config
 from .pykinect_azure_fix import pykinect_azure as pykinect
 
@@ -70,7 +68,7 @@ class BodyTracking(BaseTracking):
             for i in range(pykinect.K4ABT_JOINT_COUNT)
         }
 
-    def process(self, capture) -> Dict:
+    def process(self, capture: pykinect.Capture) -> Dict:
         start_time = time.time()
 
         # Get the updated body tracker frame.
@@ -91,39 +89,6 @@ class BodyTracking(BaseTracking):
         self.sum_processing_time += time.time() - start_time
 
         return body_landmarks
-
-
-class ThreadedTracker:
-    def __init__(self, tracker, input_type="capture"):
-        self.input_type = input_type
-        self.tracker = tracker
-        self.input = queue.Queue()
-        self.output = queue.Queue()
-        self.thread = threading.Thread(target=self.worker)
-        self.thread.start()
-
-    def worker(self):
-        while True:
-            success, data = self.input.get()
-            if not success:
-                print(f"Data is not available for {self.tracker.name}.")
-                self.output.put({})
-                continue
-
-            if data is None:
-                break
-
-            # Compute landmarks and put them into the output buffer.
-            landmarks = self.tracker.process(data)
-            self.output.put(landmarks)
-
-    def trigger(self, capture):
-        if self.input_type == "capture":
-            self.input.put((True, capture))
-        elif self.input_type == "color_image":
-            self.input.put(capture.get_color_image())
-        else:
-            raise AssertionError(f"Cannot handle input type '{self.input_type}'.")
 
 
 class AzureTracking:
@@ -147,13 +112,15 @@ class AzureTracking:
         # We add trackers in order of expected processing time (decreasingly).
         if with_body:
             body_tracking = BodyTracking(visualize)
-            self.trackers["body"] = ThreadedTracker(body_tracking, input_type="capture")
+            self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))
 
         if with_mediapipe:
             from .mediapipe_tracking import MediapipeTracking
 
             mediapipe_tracking = MediapipeTracking(visualize)
-            self.trackers["mediapipe"] = ThreadedTracker(mediapipe_tracking, input_type="color_image")
+            self.trackers["mediapipe"] = ThreadedTracker(
+                mediapipe_tracking, input_function=lambda capture: capture.get_color_image()
+            )
 
         if with_aruco:
             from .aruco_tracking import ArucoTracking
@@ -167,7 +134,9 @@ class AzureTracking:
                 color_camera_parameters["distortion_coefficients"],
                 visualize,
             )
-            self.trackers["aruco"] = ThreadedTracker(aruco_tracking, input_type="color_image")
+            self.trackers["aruco"] = ThreadedTracker(
+                aruco_tracking, input_function=lambda capture: capture.get_color_image()
+            )
 
         # Initialize statistics.
         self.step_count = 0
