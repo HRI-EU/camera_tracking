@@ -30,6 +30,7 @@
 #
 
 from typing import Dict
+from collections import defaultdict
 import json
 import time
 import cv2
@@ -71,7 +72,7 @@ class ArucoTracking(BaseTracking):
             # Visualize the found markers.
             cv2.aruco.drawDetectedMarkers(self.visualization, corners, ids)
 
-        landmarks = {}
+        landmarks = defaultdict(list)
         if ids is not None:
             ids = ids.flatten()
             for marker_corners, marker_id in zip(corners, ids):
@@ -84,10 +85,12 @@ class ArucoTracking(BaseTracking):
                 rotation_matrix, _ = cv2.Rodrigues(rotation_vector)
 
                 # Store information as list of 3 + 9 values. The rotation matrix is transposed. Why?
-                landmarks[f"aruco_{marker_id}"] = [
-                    *translation_vector.flatten(),
-                    *rotation_matrix.transpose().flatten(),
-                ]
+                landmarks[f"aruco_{marker_id}"].append(
+                    [
+                        *translation_vector.flatten(),
+                        *rotation_matrix.transpose().flatten(),
+                    ]
+                )
 
                 # Draw the axis of the marker.
                 if self.visualize:

@@ -30,7 +30,7 @@ class AzureTrackingNode:
             with_mediapipe=rospy.get_param("~with_mediapipe"),
             visualize=rospy.get_param("~visualize"),
         )
-        self.landmarks_publisher = rospy.Publisher("/azure_landmarks", std_msgs.msg.String, queue_size=1)
+        self.landmarks_publisher = rospy.Publisher("/landmarks", std_msgs.msg.String, queue_size=1)
         rospy.loginfo("Initialization done.")
 
     def run(self):

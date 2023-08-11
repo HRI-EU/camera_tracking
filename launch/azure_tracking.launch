@@ -1,7 +1,7 @@
 <launch>
-    <arg name="with_aruco" default="true"/>
-    <arg name="with_body" default="true"/>
-    <arg name="with_mediapipe" default="true"/>
+    <arg name="with_body" default="false"/>
+    <arg name="with_aruco" default="false"/>
+    <arg name="with_mediapipe" default="false"/>
     <arg name="visualize" default="true"/>
 
     <node name="azure_tracking" pkg="camera_tracking" type="azure_tracking_node.py" output="screen" respawn="true">

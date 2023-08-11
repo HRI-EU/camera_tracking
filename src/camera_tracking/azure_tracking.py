@@ -30,7 +30,7 @@
 #
 
 from typing import Dict
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 import time
 import cv2
 
@@ -53,20 +53,25 @@ class BodyTracking(BaseTracking):
 
     @staticmethod
     def body_frame_to_landmarks(body_frame: pykinect.Frame) -> Dict:
-        return {
-            f"azure_{i:02}_{body.handle().id:02}": [
-                body.joints[i].position.x,
-                body.joints[i].position.y,
-                body.joints[i].position.z,
-                body.joints[i].orientation.x,
-                body.joints[i].orientation.y,
-                body.joints[i].orientation.z,
-                body.joints[i].orientation.w,
-                body.joints[i].confidence_level,
-            ]
-            for body in body_frame.get_bodies()
-            for i in range(pykinect.K4ABT_JOINT_COUNT)
-        }
+        # body_<joint_id>_<body_id>, e.g. body_right_hand_0
+        landmarks = defaultdict(list)
+        for body in body_frame.get_bodies():
+            for joint in body.joints:
+                landmarks[f"body_{joint.name.replace(' ', '_')}"].append(
+                    [
+                        joint.position.x,
+                        joint.position.y,
+                        joint.position.z,
+                        joint.orientation.x,
+                        joint.orientation.y,
+                        joint.orientation.z,
+                        joint.orientation.w,
+                        joint.confidence_level,
+                        body.handle().id,
+                    ]
+                )
+
+        return landmarks
 
     def process(self, capture: pykinect.Capture) -> Dict:
         start_time = time.time()
@@ -95,6 +100,9 @@ class AzureTracking:
     def __init__(
         self, with_aruco: bool = True, with_body: bool = True, with_mediapipe: bool = True, visualize: bool = True
     ):
+        if not any((with_aruco, with_mediapipe, with_body)):
+            raise AssertionError("No tracker is enabled.")
+
         # Initialize the library, if the library is not found, add the library path as argument.
         pykinect.initialize_libraries(track_body=with_body)
 

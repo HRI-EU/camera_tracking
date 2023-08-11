@@ -77,8 +77,13 @@ class ThreadedTracker:
                 break
 
             # Compute landmarks and put them into the output buffer.
-            landmarks = self.tracker.process(data)
-            self.output.put(landmarks)
+            try:
+                landmarks = self.tracker.process(data)
+                self.output.put(landmarks)
+            except Exception as e:
+                # A 'None' signals the outside that the thread crashed.
+                self.output.put(None)
+                raise
 
     def trigger(self, data):
         self.input.put(self.input_function(data))

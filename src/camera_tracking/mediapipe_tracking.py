@@ -110,7 +110,7 @@ def get_connections(connections) -> Dict:
 class MediapipeTracking(BaseTracking):
     default_options = {"face": True, "hands": True, "pose": True}
 
-    def __init__(self, options: Optional[Dict], visualize: bool = True):
+    def __init__(self, options: Optional[Dict] = None, visualize: bool = True):
         self.options = self.default_options if options is None else options
         super().__init__("mediapipe", visualize=visualize)
 
