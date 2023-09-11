@@ -111,7 +111,7 @@ class AzureTracking:
         device_config.color_resolution = (
             pykinect.K4A_COLOR_RESOLUTION_1536P if (with_aruco or with_mediapipe) else pykinect.K4A_COLOR_RESOLUTION_OFF
         )
-        device_config.depth_mode = pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED
+        device_config.depth_mode = pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED if with_body else pykinect.K4A_DEPTH_MODE_OFF
         device_config.camera_fps = pykinect.K4A_FRAMES_PER_SECOND_30
 
         # Start device.
