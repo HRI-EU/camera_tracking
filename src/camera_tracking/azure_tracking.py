@@ -30,13 +30,14 @@
 #
 
 from typing import Dict
-from collections import OrderedDict, defaultdict
+from collections import OrderedDict
 import time
 import cv2
 
 from .base_tracking import BaseTracking, ThreadedTracker
 from .camera_helper import camera_parameters_from_config
 from .pykinect_azure_fix import pykinect_azure as pykinect
+from .pykinect_azure_fix import K4ABT_JOINTS
 
 
 def get_color_camera_calibration(device, depth_mode, color_resolution) -> Dict:
@@ -46,30 +47,35 @@ def get_color_camera_calibration(device, depth_mode, color_resolution) -> Dict:
 
 
 class BodyTracking(BaseTracking):
+    millimeter_to_meter_ratio = 1000.0
+
     def __init__(self, visualize: bool = True):
         # Initialize the body tracker.
         self.body_tracker = pykinect.start_body_tracker(pykinect.K4ABT_DEFAULT_MODEL)
         super().__init__("body", visualize=visualize)
 
     @staticmethod
-    def body_frame_to_landmarks(body_frame: pykinect.Frame) -> Dict:
+    def body_frame_to_landmarks(body_frame: pykinect.Frame) -> Dict[str, Dict]:
         # body_<joint_id>_<body_id>, e.g. body_right_hand_0
-        landmarks = defaultdict(list)
+        landmarks = {}
         for body in body_frame.get_bodies():
+            joints = {}
             for joint in body.joints:
-                landmarks[f"body_{joint.name.replace(' ', '_')}"].append(
-                    [
-                        joint.position.x,
-                        joint.position.y,
-                        joint.position.z,
+                joint_name = K4ABT_JOINTS(joint.id).name[12:].lower()
+                joints[f"{joint_name}"] = {
+                    "pose": [
+                        joint.position.x / BodyTracking.millimeter_to_meter_ratio,
+                        joint.position.y / BodyTracking.millimeter_to_meter_ratio,
+                        joint.position.z / BodyTracking.millimeter_to_meter_ratio,
                         joint.orientation.x,
                         joint.orientation.y,
                         joint.orientation.z,
                         joint.orientation.w,
-                        joint.confidence_level,
-                        body.handle().id,
-                    ]
-                )
+                    ],
+                    "confidence": joint.confidence_level,
+                }
+
+            landmarks[body.handle().id] = joints
 
         return landmarks
 
@@ -97,11 +103,31 @@ class BodyTracking(BaseTracking):
 
 
 class AzureTracking:
+    color_resolution_mapping = {
+        "720P": pykinect.K4A_COLOR_RESOLUTION_720P,
+        "1080P": pykinect.K4A_COLOR_RESOLUTION_1080P,
+        "1440P": pykinect.K4A_COLOR_RESOLUTION_1440P,
+        "1536P": pykinect.K4A_COLOR_RESOLUTION_1536P,
+        "2160P": pykinect.K4A_COLOR_RESOLUTION_2160P,
+        "3072P": pykinect.K4A_COLOR_RESOLUTION_3072P,
+    }
+
     def __init__(
-        self, with_aruco: bool = True, with_body: bool = True, with_mediapipe: bool = True, visualize: bool = True
+        self,
+        with_aruco: bool = True,
+        with_body: bool = True,
+        with_mediapipe: bool = True,
+        visualize: bool = True,
+        color_resolution: str = "1536P",
     ):
         if not any((with_aruco, with_mediapipe, with_body)):
             raise AssertionError("No tracker is enabled.")
+
+        if color_resolution not in AzureTracking.color_resolution_mapping:
+            raise AssertionError(
+                f"Unknown color resolution '{color_resolution}'. "
+                f"Known ones are {AzureTracking.color_resolution_mapping}."
+            )
 
         # Initialize the library, if the library is not found, add the library path as argument.
         pykinect.initialize_libraries(track_body=with_body)
@@ -109,7 +135,9 @@ class AzureTracking:
         # Define the device configuration.
         device_config = pykinect.default_configuration
         device_config.color_resolution = (
-            pykinect.K4A_COLOR_RESOLUTION_1536P if (with_aruco or with_mediapipe) else pykinect.K4A_COLOR_RESOLUTION_OFF
+            AzureTracking.color_resolution_mapping[color_resolution]
+            if (with_aruco or with_mediapipe)
+            else pykinect.K4A_COLOR_RESOLUTION_OFF
         )
         device_config.depth_mode = pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED if with_body else pykinect.K4A_DEPTH_MODE_OFF
         device_config.camera_fps = pykinect.K4A_FRAMES_PER_SECOND_30
@@ -159,18 +187,17 @@ class AzureTracking:
 
         # Get capture.
         capture = self.device.update()
-        self.sum_capture_time += time.time() - start_time
+        capture_time = time.time()
+        self.sum_capture_time += capture_time - start_time
 
         # Trigger trackers in given order (decreasing processing time).
         for tracker in self.trackers.values():
             tracker.trigger(capture)
 
-        landmarks = {}
-
         # Wait for tracker results in reversed order (increasing processing time)
+        landmarks = {"header": {"timestamp": capture_time, "frame_id": "camera", "seq": self.step_count}}
         for tracker in reversed(self.trackers.values()):
-            tracker_landmarks = tracker.output.get()
-            landmarks.update(tracker_landmarks)
+            landmarks[tracker.tracker.name] = tracker.output.get()
             tracker.tracker.show_visualization()
 
         self.sum_overall_time += time.time() - start_time

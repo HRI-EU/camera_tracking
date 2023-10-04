@@ -35,6 +35,7 @@ import json
 import time
 import cv2
 import numpy
+from scipy.spatial.transform import Rotation
 
 from camera_tracking.camera_helper import load_camera_parameters
 from camera_tracking.base_tracking import BaseTracking
@@ -45,6 +46,13 @@ class ArucoTracking(BaseTracking):
 
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         self.aruco_parameters = cv2.aruco.DetectorParameters()
+        self.aruco_parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
+        self.aruco_parameters.cornerRefinementWinSize = 4
+        self.aruco_parameters.minDistanceToBorder = 2
+        self.aruco_parameters.writeDetectorParameters(
+            cv2.FileStorage("aruco_parameters.txt", cv2.FILE_STORAGE_WRITE),
+            "aruco_parameters",
+        )
 
         # We use a default length of 1m, and scale the markers on the receiving side.
         self.default_marker_length = 1.0
@@ -81,15 +89,14 @@ class ArucoTracking(BaseTracking):
                     marker_corners, self.default_marker_length, self.camera_matrix, self.distortion_coefficients
                 )
 
-                # Transform rotation vector to matrix.
-                rotation_matrix, _ = cv2.Rodrigues(rotation_vector)
-
-                # Store information as list of 3 + 9 values. The rotation matrix is transposed. Why?
+                # Store information as list of 3 + 4 values.
                 landmarks[f"aruco_{marker_id}"].append(
-                    [
-                        *translation_vector.flatten(),
-                        *rotation_matrix.transpose().flatten(),
-                    ]
+                    {
+                        "pose": [
+                            *translation_vector.flatten(),
+                            *Rotation.from_rotvec(rotation_vector.flatten()).as_quat(),
+                        ]
+                    }
                 )
 
                 # Draw the axis of the marker.
@@ -100,7 +107,7 @@ class ArucoTracking(BaseTracking):
                         self.distortion_coefficients,
                         rotation_vector,
                         translation_vector,
-                        0.20,
+                        0.30,
                     )
 
         self.sum_processing_time += time.time() - start_time

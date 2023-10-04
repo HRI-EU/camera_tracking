@@ -29,6 +29,7 @@ class AzureTrackingNode:
             with_body=rospy.get_param("~with_body"),
             with_mediapipe=rospy.get_param("~with_mediapipe"),
             visualize=rospy.get_param("~visualize"),
+            color_resolution=rospy.get_param("~color_resolution"),
         )
         self.landmarks_publisher = rospy.Publisher("/landmarks", std_msgs.msg.String, queue_size=1)
         rospy.loginfo("Initialization done.")
@@ -44,7 +45,7 @@ class AzureTrackingNode:
 
 def main():
     rospy.init_node("azure_tracking")
-    # logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
     azure_tracking = AzureTrackingNode()
     azure_tracking.run()
     azure_tracking.stop()
