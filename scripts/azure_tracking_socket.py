@@ -47,6 +47,8 @@ class AzureTrackingSocket:
         parser.add_argument("--body", default=False, action="store_true", help="enable tracking of body skeleton")
         parser.add_argument("--mediapipe", default=False, action="store_true", help="enable tracking with mediapipe")
         parser.add_argument("--visualize", default=False, action="store_true", help="visualize markers")
+        parser.add_argument("--k4a_path", default=None, help="custom path to k4a")
+        parser.add_argument("--k4abt_path", default=None, help="custom path to k4abt")
         parser.add_argument(
             "--log-level",
             default="info",
@@ -59,7 +61,12 @@ class AzureTrackingSocket:
         logging.basicConfig(format="%(levelname)s: %(message)s", level=args.log_level.upper())
 
         self.azure_tracking = AzureTracking(
-            with_aruco=args.aruco, with_body=args.body, with_mediapipe=args.mediapipe, visualize=args.visualize
+            with_aruco=args.aruco,
+            with_body=args.body,
+            with_mediapipe=args.mediapipe,
+            visualize=args.visualize,
+            module_k4a_path=args.k4a_path,
+            module_k4abt_path=args.k4abt_path,
         )
         self.standalone = args.standalone
 

@@ -29,7 +29,7 @@
 #  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-from typing import Dict
+from typing import Dict, Optional
 from collections import OrderedDict
 import time
 import cv2
@@ -121,6 +121,8 @@ class AzureTracking:
         with_mediapipe: bool = True,
         visualize: bool = True,
         color_resolution: str = "1536P",
+        module_k4a_path: Optional[str] = None,
+        module_k4abt_path: Optional[str] = None,
     ):
         if not any((with_aruco, with_mediapipe, with_body)):
             raise AssertionError("No tracker is enabled.")
@@ -132,7 +134,9 @@ class AzureTracking:
             )
 
         # Initialize the library, if the library is not found, add the library path as argument.
-        pykinect.initialize_libraries(track_body=with_body)
+        pykinect.initialize_libraries(
+            module_k4a_path=module_k4a_path, module_k4abt_path=module_k4abt_path, track_body=with_body
+        )
 
         # Define the device configuration.
         device_config = pykinect.default_configuration
@@ -197,9 +201,9 @@ class AzureTracking:
             tracker.trigger(capture)
 
         # Wait for tracker results in reversed order (increasing processing time)
-        landmarks = {"header": {"timestamp": capture_time, "frame_id": "camera", "seq": self.step_count}}
+        landmarks = {"header": {"timestamp": capture_time, "frame_id": "camera", "seq": self.step_count}, "data": {}}
         for tracker in reversed(self.trackers.values()):
-            landmarks[tracker.tracker.name] = tracker.output.get()
+            landmarks["data"][tracker.tracker.name] = tracker.output.get()
             tracker.tracker.show_visualization()
 
         self.sum_overall_time += time.time() - start_time
