@@ -92,10 +92,15 @@ class ArucoTracking(BaseTracking):
                 # Store information as list of 3 + 4 values.
                 landmarks[f"aruco_{marker_id}"].append(
                     {
-                        "pose": [
-                            *translation_vector.flatten(),
-                            *Rotation.from_rotvec(rotation_vector.flatten()).as_quat(),
-                        ]
+                        "position": {
+                            key: value for key, value in zip("xyz", translation_vector.flatten())  # , strict=True)
+                        },
+                        "orientation": {
+                            key: value
+                            for key, value in zip(
+                                "xyzw", Rotation.from_rotvec(rotation_vector.flatten()).as_quat()
+                            )  # , strict=True)
+                        },
                     }
                 )
 

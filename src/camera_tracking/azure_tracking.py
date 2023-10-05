@@ -63,15 +63,17 @@ class BodyTracking(BaseTracking):
             for joint in body.joints:
                 joint_name = K4ABT_JOINTS(joint.id).name[12:].lower()
                 joints[f"{joint_name}"] = {
-                    "pose": [
-                        joint.position.x / BodyTracking.millimeter_to_meter_ratio,
-                        joint.position.y / BodyTracking.millimeter_to_meter_ratio,
-                        joint.position.z / BodyTracking.millimeter_to_meter_ratio,
-                        joint.orientation.x,
-                        joint.orientation.y,
-                        joint.orientation.z,
-                        joint.orientation.w,
-                    ],
+                    "position": {
+                        "x": joint.position.x / BodyTracking.millimeter_to_meter_ratio,
+                        "y": joint.position.y / BodyTracking.millimeter_to_meter_ratio,
+                        "z": joint.position.z / BodyTracking.millimeter_to_meter_ratio,
+                    },
+                    "orientation": {
+                        "x": joint.orientation.x,
+                        "y": joint.orientation.y,
+                        "z": joint.orientation.z,
+                        "w": joint.orientation.w,
+                    },
                     "confidence": joint.confidence_level,
                 }
 
