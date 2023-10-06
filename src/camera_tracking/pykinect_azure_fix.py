@@ -31,9 +31,10 @@
 #  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+import os
 from enum import Enum
 import ctypes
-from pykinect_azure.k4abt import _k4abt, _k4abtTypes
+from pykinect_azure.k4abt import _k4abt, _k4abtTypes, Tracker
 
 
 class K4ABT_JOINTS(Enum):
@@ -76,9 +77,28 @@ def setup_onnx_provider_linux():
     # This fails with: /usr/lib/libonnxruntime_providers_cuda.so: undefined symbol: Provider_GetHost
     # Instead we directly load libonnxruntime.so.1.10.0 which later seems to load libonnxruntime_providers_cuda.so.
     _k4abtTypes.k4abt_tracker_default_configuration.processing_mode = _k4abtTypes.K4ABT_TRACKER_PROCESSING_MODE_GPU_CUDA
-    ctypes.cdll.LoadLibrary("libonnxruntime.so.1.10.0")
+    ctypes.cdll.LoadLibrary(os.getenv("AZURE_ONNXRUNTIME_PATH", "/usr/lib/libonnxruntime.so.1.10.0"))
 
 
 _k4abt.setup_onnx_provider_linux = setup_onnx_provider_linux
+
+
+def get_tracker_configuration(self, model_type):
+    tracker_config = _k4abtTypes.k4abt_tracker_default_configuration
+
+    if model_type == _k4abt.K4ABT_LITE_MODEL:
+        model_path = os.path.join(os.getenv("AZURE_DNN_MODEL_PATH", "/usr/bin"), "dnn_model_2_0_lite_op11.onnx")
+    elif model_type == _k4abt.K4ABT_DEFAULT_MODEL:
+        model_path = os.path.join(os.getenv("AZURE_DNN_MODEL_PATH", "/usr/bin"), "dnn_model_2_0_op11.onnx")
+    else:
+        raise AssertionError(f"Cannot handle model type {model_type}.")
+
+    print(f"Using model path {model_path}")
+    tracker_config.model_path = model_path.encode("utf-8")
+
+    return tracker_config
+
+Tracker.get_tracker_configuration = get_tracker_configuration
+
 
 import pykinect_azure

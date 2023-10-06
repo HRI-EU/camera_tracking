@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  Creates the virtual python environment for smile_ros_ws and installs dependencies defined in requirements.txt.
+#  Creates the project's virtual python environment and installs dependencies defined in requirements.txt.
 #
 #  Copyright (C)
 #  Honda Research Institute Europe GmbH
