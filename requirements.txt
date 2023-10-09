@@ -3,3 +3,6 @@ mediapipe==0.10.3
 zmq==0.0.0
 pyyaml
 scipy
+
+# For code formatting.
+black==22.3.0

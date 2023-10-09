@@ -14,6 +14,6 @@
 #
 
 # shellcheck source=/dev/null
-source /hri/sit/latest/DevelopmentTools/ToolBOSCore/4.0.29/BashSrc
-source /hri/sit/latest/External/anaconda3/envs/common/3.7/BashSrc
+source /hri/sit/latest/DevelopmentTools/ToolBOSCore/4.2.5/BashSrc
+source /hri/sit/latest/External/anaconda3/envs/common/3.10/BashSrc
 BST.py -q

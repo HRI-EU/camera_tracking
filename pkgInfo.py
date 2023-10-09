@@ -16,7 +16,7 @@
 
 category = "Modules/ROS"
 sqLevel = "basic"
-sqOptOutDirs = ["src/camera_tacking/pyKinectAzure3rdParty"]
+sqOptOutDirs = ["venv"]
 sqOptOutRules = [
     "C09",
     "C10",

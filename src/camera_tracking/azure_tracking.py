@@ -1,35 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) Honda Research Institute Europe GmbH.
+#  Class that offers tracking of markers with the azure camera.
 #
-#  Redistribution and use in source and binary forms, with or without
-#  modification, are permitted provided that the following conditions are met:
+#  Copyright (C)
+#  Honda Research Institute Europe GmbH
+#  Carl-Legien-Str. 30
+#  63073 Offenbach/Main
+#  Germany
 #
-#  1. Redistributions of source code must retain the above copyright notice,
-#     this list of conditions and the following disclaimer.
+#  UNPUBLISHED PROPRIETARY MATERIAL.
+#  ALL RIGHTS RESERVED.
 #
-#  2. Redistributions in binary form must reproduce the above copyright notice,
-#     this list of conditions and the following disclaimer in the documentation
-#     and/or other materials provided with the distribution.
-#
-#  3. Neither the name of the copyright holder nor the names of its
-#     contributors may be used to endorse or promote products derived from
-#     this software without specific prior written permission.
-#
-#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR
-#  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-#  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-#  IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT,
-#  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-#  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-#  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-#  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-#  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-from typing import Dict, Optional
+from typing import Dict
 from collections import OrderedDict
 import time
 import cv2
@@ -37,7 +22,7 @@ import cv2
 from .base_tracking import BaseTracking, ThreadedTracker
 from .camera_helper import camera_parameters_from_config
 from .pykinect_azure_fix import pykinect_azure as pykinect
-from .pykinect_azure_fix import K4ABT_JOINTS
+from .pykinect_azure_fix import K4ABT_JOINTS, get_custom_k4a_path, get_custom_k4abt_path
 
 
 def get_color_camera_calibration(device, depth_mode, color_resolution) -> Dict:
@@ -114,6 +99,13 @@ class AzureTracking:
         "3072P": pykinect.K4A_COLOR_RESOLUTION_3072P,
     }
 
+    depth_mode_mapping = {
+        "NFOV_2X2BINNED": pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED,
+        "NFOV_UNBINNED": pykinect.K4A_DEPTH_MODE_NFOV_UNBINNED,
+        "WFOV_2X2BINNED": pykinect.K4A_DEPTH_MODE_WFOV_2X2BINNED,
+        "WFOV_UNBINNED": pykinect.K4A_DEPTH_MODE_WFOV_UNBINNED,
+    }
+
     def __init__(
         self,
         with_aruco: bool = True,
@@ -121,8 +113,7 @@ class AzureTracking:
         with_mediapipe: bool = True,
         visualize: bool = True,
         color_resolution: str = "1536P",
-        module_k4a_path: Optional[str] = None,
-        module_k4abt_path: Optional[str] = None,
+        depth_mode: str = "NFOV_2X2BINNED",
     ):
         if not any((with_aruco, with_mediapipe, with_body)):
             raise AssertionError("No tracker is enabled.")
@@ -133,9 +124,14 @@ class AzureTracking:
                 f"Known ones are {AzureTracking.color_resolution_mapping}."
             )
 
-        # Initialize the library, if the library is not found, add the library path as argument.
+        if depth_mode not in AzureTracking.depth_mode_mapping:
+            raise AssertionError(
+                f"Unknown depth mode '{depth_mode}'. Known ones are {AzureTracking.depth_mode_mapping}."
+            )
+
+        # Initialize the library.
         pykinect.initialize_libraries(
-            module_k4a_path=module_k4a_path, module_k4abt_path=module_k4abt_path, track_body=with_body
+            module_k4a_path=get_custom_k4a_path(), module_k4abt_path=get_custom_k4abt_path(), track_body=with_body
         )
 
         # Define the device configuration.
@@ -145,7 +141,9 @@ class AzureTracking:
             if (with_aruco or with_mediapipe)
             else pykinect.K4A_COLOR_RESOLUTION_OFF
         )
-        device_config.depth_mode = pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED if with_body else pykinect.K4A_DEPTH_MODE_OFF
+        device_config.depth_mode = (
+            AzureTracking.depth_mode_mapping[depth_mode] if with_body else pykinect.K4A_DEPTH_MODE_OFF
+        )
         device_config.camera_fps = pykinect.K4A_FRAMES_PER_SECOND_30
 
         # Start device.
