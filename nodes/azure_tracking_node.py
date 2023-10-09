@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Node that provides tracking using Azure Kinect.
+#  Node that provides marker tracking using Azure Kinect.
 #
 #  Copyright (C)
 #  Honda Research Institute Europe GmbH
@@ -30,6 +30,7 @@ class AzureTrackingNode:
             with_mediapipe=rospy.get_param("~with_mediapipe"),
             visualize=rospy.get_param("~visualize"),
             color_resolution=rospy.get_param("~color_resolution"),
+            depth_mode=rospy.get_param("~depth_mode"),
         )
         self.landmarks_publisher = rospy.Publisher("/landmarks", std_msgs.msg.String, queue_size=1)
         rospy.loginfo("Initialization done.")

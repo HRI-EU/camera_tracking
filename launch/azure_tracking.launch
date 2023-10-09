@@ -4,13 +4,15 @@
     <arg name="with_mediapipe" default="false"/>
     <arg name="visualize" default="true"/>
     <arg name="color_resolution" default="1536P"/>
+    <arg name="depth_mode" default="NFOV_2X2BINNED"/>
 
-    <node name="azure_tracking" pkg="camera_tracking" type="azure_tracking_node.py" output="screen" respawn="false">
+    <node name="azure_tracking" pkg="camera_tracking" type="azure_tracking_node.py" output="screen" respawn="true">
         <param name="with_aruco" type="bool" value="$(arg with_aruco)"/>
         <param name="with_body" type="bool" value="$(arg with_body)"/>
         <param name="with_mediapipe" type="bool" value="$(arg with_mediapipe)"/>
         <param name="visualize" type="bool" value="$(arg visualize)"/>
         <param name="color_resolution" type="str" value="$(arg color_resolution)"/>
+        <param name="depth_mode" type="str" value="$(arg depth_mode)"/>
     </node>
 
 </launch>

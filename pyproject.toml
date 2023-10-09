@@ -1,14 +1,14 @@
 [tool.black]
 line-length = 120
-force-exclude = '''
-/(
-    example/path
-)/
-'''
+#force-exclude = '''
+#/(
+#    example/path
+#)/
+#'''
 
 [tool.pylint.main]
 ignore = ["tests", "mock", "setup.py", "pkgInfo.py"]
-ignore-paths = ["^venvpip$"]
+ignore-paths = ["^venv$"]
 
 
 [tool.pylint.messages_control]

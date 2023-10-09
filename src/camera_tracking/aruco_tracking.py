@@ -29,7 +29,6 @@ from camera_tracking.base_tracking import BaseTracking
 
 class ArucoTracking(BaseTracking):
     def __init__(self, camera_matrix: numpy.ndarray, distortion_coefficients: numpy.ndarray, visualize: bool = True):
-
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         self.aruco_parameters = cv2.aruco.DetectorParameters()
         self.aruco_parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
