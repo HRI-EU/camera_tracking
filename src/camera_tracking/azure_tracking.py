@@ -66,7 +66,7 @@ class BodyTracking(BaseTracking):
 
         return landmarks
 
-    def process(self, capture: pykinect.Capture) -> Dict:
+    def process(self, data: pykinect.Capture) -> Dict:
         start_time = time.time()
 
         # Get the updated body tracker frame.
@@ -75,7 +75,7 @@ class BodyTracking(BaseTracking):
 
         if self.visualize:
             # Get the depth image from the capture.
-            success, depth_image = capture.get_depth_image()
+            success, depth_image = data.get_depth_image()
             if not success:
                 print("Could not get depth image from capture.")
             else:

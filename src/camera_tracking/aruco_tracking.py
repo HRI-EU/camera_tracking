@@ -14,6 +14,7 @@
 #
 #
 
+from __future__ import annotations
 from typing import Dict
 from collections import defaultdict
 import json
@@ -34,10 +35,6 @@ class ArucoTracking(BaseTracking):
         self.aruco_parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
         self.aruco_parameters.cornerRefinementWinSize = 4
         self.aruco_parameters.minDistanceToBorder = 2
-        self.aruco_parameters.writeDetectorParameters(
-            cv2.FileStorage("aruco_parameters.txt", cv2.FILE_STORAGE_WRITE),
-            "aruco_parameters",
-        )
 
         # We use a default length of 1m, and scale the markers on the receiving side.
         self.default_marker_length = 1.0
@@ -47,21 +44,27 @@ class ArucoTracking(BaseTracking):
 
         super().__init__("aruco", visualize=visualize)
 
-    def process(self, image: numpy.ndarray) -> Dict:
+    def write_detector_parameters(self):
+        self.aruco_parameters.writeDetectorParameters(
+            cv2.FileStorage("aruco_parameters.txt", cv2.FILE_STORAGE_WRITE),
+            "aruco_parameters",
+        )
+
+    def process(self, data: numpy.ndarray) -> Dict:
         """
         Process an image.
-        @param image: The image to be processed. If the image is colored we assume BGR.
+        @param data: The image to be processed. If the image is colored we assume BGR.
         @return: The found aruco landmarks.
         """
 
         start_time = time.time()
 
         # Find all markers in the image.
-        corners, ids, _ = cv2.aruco.detectMarkers(image, self.aruco_dict, parameters=self.aruco_parameters)
+        corners, ids, _ = cv2.aruco.detectMarkers(data, self.aruco_dict, parameters=self.aruco_parameters)
 
         if self.visualize:
             # Make a copy of the image, as the outside might assume that we do not alter the image.
-            self.visualization = image.copy()
+            self.visualization = data.copy()
             # Visualize the found markers.
             cv2.aruco.drawDetectedMarkers(self.visualization, corners, ids)
 
@@ -77,15 +80,8 @@ class ArucoTracking(BaseTracking):
                 # Store information as list of 3 + 4 values.
                 landmarks[f"aruco_{marker_id}"].append(
                     {
-                        "position": {
-                            key: value for key, value in zip("xyz", translation_vector.flatten())  # , strict=True)
-                        },
-                        "orientation": {
-                            key: value
-                            for key, value in zip(
-                                "xyzw", Rotation.from_rotvec(rotation_vector.flatten()).as_quat()
-                            )  # , strict=True)
-                        },
+                        "position": dict(zip("xyz", translation_vector.flatten())),
+                        "orientation": dict(zip("xyzw", Rotation.from_rotvec(rotation_vector.flatten()).as_quat())),
                     }
                 )
 
@@ -113,11 +109,11 @@ def main():
     print(f"Landmarks are:\n{landmarks}")
 
     # Store the found landmarks.
-    with open("data/test/aruco_test_landmarks.json", "w") as file:
+    with open("data/test/aruco_test_landmarks.json", "w", encoding="utf-8") as file:
         json.dump(landmarks, file)
 
     # Compare to reference landmarks.
-    with open("data/test/aruco_test_reference_landmarks.json") as file:
+    with open("data/test/aruco_test_reference_landmarks.json", encoding="utf-8") as file:
         reference_landmarks = json.load(file)
     if landmarks != reference_landmarks:
         print(f"Mismatch detected. Reference landmarks are:\n{reference_landmarks}")

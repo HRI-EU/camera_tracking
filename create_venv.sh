@@ -18,7 +18,7 @@ if [[ ! -f requirements.txt ]]; then
     exit 1
 fi
 
-# Create virtualenv when the directory does not exist (allow access to system site-packages to not break ROS).
+# Create virtualenv when the directory does not exist.
 if [[ ! -d venv ]]; then
     python -m venv venv
 fi

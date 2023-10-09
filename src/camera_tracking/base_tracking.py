@@ -63,7 +63,7 @@ class ThreadedTracker:
             try:
                 landmarks = self.tracker.process(data)
                 self.output.put(landmarks)
-            except Exception as e:
+            except Exception:
                 # A 'None' signals the outside that the thread crashed.
                 self.output.put(None)
                 raise

@@ -25,7 +25,7 @@ def load_camera_parameters(config_file: str) -> Dict:
     @return: The camera parameters.
     """
     try:
-        with open(config_file) as f:
+        with open(config_file, encoding="utf-8") as f:
             config = yaml.load(f, Loader=yaml.SafeLoader)
     except IOError as e:
         raise AssertionError(f"Could not open '{config_file}'.") from e

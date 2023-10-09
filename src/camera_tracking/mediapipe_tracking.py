@@ -99,7 +99,7 @@ class MediapipeTracking(BaseTracking):
         self.options = self.default_options if options is None else options
         super().__init__("mediapipe", visualize=visualize)
 
-    def process(self, image: numpy.ndarray, options: Optional[Dict] = None):
+    def process(self, data: numpy.ndarray, options: Optional[Dict] = None):
         """
         Process an image.
         @param image: The image to be processed. If the image is colored we assume BGR.
@@ -132,7 +132,7 @@ class MediapipeTracking(BaseTracking):
             return landmarks
 
         # Convert the BGR image to RGB.
-        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        rgb_image = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
 
         # To improve performance, optionally mark the image as not writeable to pass by reference.
         rgb_image.flags.writeable = False
@@ -153,7 +153,7 @@ class MediapipeTracking(BaseTracking):
 
         if self.visualize:
             # Draw the hand annotations on the image.
-            self.visualization = image.copy()
+            self.visualization = data.copy()
 
             if with_pose and results_pose.pose_landmarks:
                 mp_drawing.draw_landmarks(self.visualization, results_pose.pose_landmarks)
@@ -178,11 +178,11 @@ def main():
     print(f"Landmarks are:\n{landmarks}")
 
     # Store the found landmarks.
-    with open("data/test/mediapipe_test_landmarks.json", "w") as file:
+    with open("data/test/mediapipe_test_landmarks.json", "w", encoding="utf-8") as file:
         json.dump(landmarks, file)
 
     # Compare to reference landmarks.
-    with open("data/test/mediapipe_test_reference_landmarks.json") as file:
+    with open("data/test/mediapipe_test_reference_landmarks.json", encoding="utf-8") as file:
         reference_landmarks = json.load(file)
     if landmarks != reference_landmarks:
         print(f"Mismatch detected. Reference landmarks are:\n{reference_landmarks}")

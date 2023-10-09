@@ -33,14 +33,16 @@ class AzureTrackingSocket:
         parser.add_argument("--mediapipe", default=False, action="store_true", help="enable tracking with mediapipe")
         parser.add_argument("--visualize", default=False, action="store_true", help="visualize markers")
         parser.add_argument(
-            "--color_resolution",
-            default="2160P",
+            "--color-resolution",
+            default="1536P",
+            type=str,
             choices=AzureTracking.color_resolution_mapping,
             help="the color resolution to use",
         )
         parser.add_argument(
-            "--depth_mode",
+            "--depth-mode",
             default="NFOV_2X2BINNED",
+            type=str,
             choices=AzureTracking.depth_mode_mapping,
             help="the depth mode to use",
         )
