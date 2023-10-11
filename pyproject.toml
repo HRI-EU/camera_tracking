@@ -10,7 +10,6 @@ line-length = 120
 ignore = ["tests", "mock", "setup.py", "pkgInfo.py"]
 ignore-paths = ["^venv$"]
 
-
 [tool.pylint.messages_control]
 max-line-length = 120
 disable = [
