@@ -14,10 +14,12 @@
 #
 #
 
-from typing import Dict
+from typing import Dict, Optional
 from collections import OrderedDict
 import time
+import numpy
 import cv2
+from scipy.spatial.transform import Rotation
 
 from .base_tracking import BaseTracking, ThreadedTracker
 from .camera_helper import camera_parameters_from_config
@@ -27,38 +29,64 @@ from .pykinect_azure_fix import K4ABT_JOINTS, get_custom_k4a_path, get_custom_k4
 
 def get_color_camera_calibration(device, depth_mode, color_resolution) -> Dict:
     calibration = device.get_calibration(depth_mode, color_resolution)
+
     config = {name: getattr(calibration.color_params, name) for name, _ in calibration.color_params._fields_}
-    return camera_parameters_from_config(config)
+    camera_parameters = camera_parameters_from_config(config)
+
+    # We assume depth camera is the reference and thus should have an identity transform.
+    depth_camera_rotation = numpy.array(calibration._handle.depth_camera_calibration.extrinsics.rotation).reshape(3, 3)
+    depth_camera_translation = numpy.array(calibration._handle.depth_camera_calibration.extrinsics.translation)
+    assert numpy.allclose(depth_camera_rotation, numpy.eye(3, dtype=float)) or not numpy.any(depth_camera_rotation)
+    assert not numpy.any(depth_camera_translation)
+
+    color_camera_rotation = numpy.array(calibration._handle.color_camera_calibration.extrinsics.rotation).reshape(3, 3)
+    color_camera_translation = numpy.array(calibration._handle.color_camera_calibration.extrinsics.translation) / 1000.0
+
+    # Convert to homogeneous transformation matrix.
+    transformation_matrix_depth_to_color = numpy.identity(4)
+    transformation_matrix_depth_to_color[:3, :3] = color_camera_rotation
+    transformation_matrix_depth_to_color[:3, 3] = color_camera_translation
+    camera_parameters["transformation_matrix_depth_to_color"] = transformation_matrix_depth_to_color
+
+    return camera_parameters
 
 
 class BodyTracking(BaseTracking):
     millimeter_to_meter_ratio = 1000.0
 
-    def __init__(self, visualize: bool = True):
+    def __init__(self, visualize: bool = True, transformation_matrix: Optional[numpy.ndarray] = None):
+        self.transformation_matrix = transformation_matrix
         # Initialize the body tracker.
         self.body_tracker = pykinect.start_body_tracker(pykinect.K4ABT_DEFAULT_MODEL)
         super().__init__("body", visualize=visualize)
 
-    @staticmethod
-    def body_frame_to_landmarks(body_frame: pykinect.Frame) -> Dict[str, Dict]:
+    def body_frame_to_landmarks(self, body_frame: pykinect.Frame) -> Dict[str, Dict]:
         # body_<joint_id>_<body_id>, e.g. body_right_hand_0
         landmarks = {}
         for body in body_frame.get_bodies():
             joints = {}
             for joint in body.joints:
+                rotation = Rotation.from_quat(
+                    [joint.orientation.x, joint.orientation.y, joint.orientation.z, joint.orientation.w]
+                )
+                translation = (
+                    numpy.array([joint.position.x, joint.position.y, joint.position.z])
+                    / BodyTracking.millimeter_to_meter_ratio
+                )
+
+                if self.transformation_matrix is not None:
+                    pose_matrix_in_have = numpy.identity(4)
+                    pose_matrix_in_have[:3, :3] = rotation.as_matrix()
+                    pose_matrix_in_have[:3, 3] = translation
+
+                    pose_matrix_in_want = numpy.dot(self.transformation_matrix, pose_matrix_in_have)
+                    translation = pose_matrix_in_want[:3, 3]
+                    rotation = Rotation.from_matrix(pose_matrix_in_want[:3, :3])
+
                 joint_name = K4ABT_JOINTS(joint.id).name[12:].lower()
-                joints[f"{joint_name}"] = {
-                    "position": {
-                        "x": joint.position.x / BodyTracking.millimeter_to_meter_ratio,
-                        "y": joint.position.y / BodyTracking.millimeter_to_meter_ratio,
-                        "z": joint.position.z / BodyTracking.millimeter_to_meter_ratio,
-                    },
-                    "orientation": {
-                        "x": joint.orientation.x,
-                        "y": joint.orientation.y,
-                        "z": joint.orientation.z,
-                        "w": joint.orientation.w,
-                    },
+                joints[joint_name] = {
+                    "position": dict(zip("xyz", translation)),
+                    "orientation": dict(zip("xyzw", rotation.as_quat())),
                     "confidence": joint.confidence_level,
                 }
 
@@ -149,11 +177,19 @@ class AzureTracking:
         # Start device.
         self.device = pykinect.start_device(config=device_config)
 
+        # Get the resolution specific calibration parameters of the color camera.
+        color_camera_parameters = get_color_camera_calibration(
+            self.device, device_config.depth_mode, device_config.color_resolution
+        )
+
         self.trackers = OrderedDict()
 
         # We add trackers in order of expected processing time (decreasingly).
         if with_body:
-            body_tracking = BodyTracking(visualize=visualize)
+            body_tracking = BodyTracking(
+                visualize=visualize,
+                transformation_matrix=color_camera_parameters["transformation_matrix_depth_to_color"],
+            )
             self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))
 
         if with_mediapipe:
@@ -167,10 +203,6 @@ class AzureTracking:
         if with_aruco:
             from .aruco_tracking import ArucoTracking
 
-            # Get the resolution specific calibration parameters of the color camera.
-            color_camera_parameters = get_color_camera_calibration(
-                self.device, device_config.depth_mode, device_config.color_resolution
-            )
             aruco_tracking = ArucoTracking(
                 color_camera_parameters["camera_matrix"],
                 color_camera_parameters["distortion_coefficients"],
