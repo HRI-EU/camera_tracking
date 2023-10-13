@@ -2,7 +2,7 @@ git+https://github.com/ibaiGorordo/pyKinectAzure.git@0.0.3
 mediapipe==0.10.3
 zmq==0.0.0
 pyyaml
-scipy
+scipy>=1.4
 
 # For code formatting.
 black==23.9.1
