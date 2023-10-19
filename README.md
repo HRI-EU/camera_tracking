@@ -10,11 +10,11 @@ This project offers camera-based marker tracking.
 ## To use standalone
 You can use the package standalone on your host by executing:
 ```bash
-# Setup a virtual python environment.
+# Setup a virtual python environment (once).
 ./create_venv.sh 
 
 # Source the virtual python environment and set some paths. 
-source local_sit.env
+source local.env
 
 # E.g., start tracking using the Azure camera with socket interface. 
 ./scripts/azure_tracking_socket.py --standalone --visualize --aruco --body
