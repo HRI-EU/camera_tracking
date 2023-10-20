@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  BLAAA
+#  #  Class that offers tracking of markers with a webcam.
 #
 #  Copyright (C)
 #  Honda Research Institute Europe GmbH
@@ -14,18 +14,23 @@
 #
 #
 
-import time
-from collections import OrderedDict
 import cv2
 
-from .base_tracking import ThreadedTracker
+from .base_tracking import ThreadedTracker, BaseCamera
 from .camera_helper import load_camera_parameters
 
 
-class WebcamTracking:
+class WebcamTracking(BaseCamera):
     def __init__(
-        self, camera_config_file: str, with_aruco: bool = True, with_mediapipe: bool = True, visualize: bool = True
+        self,
+        camera_config_file: str,
+        with_aruco: bool = True,
+        with_mediapipe: bool = True,
+        visualize: bool = True,
+        frame_id: str = "",
     ):
+        super().__init__(frame_id=frame_id)
+
         camera_parameters = load_camera_parameters(camera_config_file)
 
         self.capture = cv2.VideoCapture(0)
@@ -35,7 +40,6 @@ class WebcamTracking:
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, camera_parameters["width"])
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, camera_parameters["height"])
 
-        self.trackers = OrderedDict()
         # We add trackers in order of expected processing time (decreasingly).
         if with_mediapipe:
             from .mediapipe_tracking import MediapipeTracking
@@ -51,54 +55,9 @@ class WebcamTracking:
             )
             self.trackers["aruco"] = ThreadedTracker(aruco_tracking, input_function=lambda capture: capture)
 
-        # Initialize statistics.
-        self.step_count = 0
-        self.sum_overall_time = 0.0
-        self.sum_capture_time = 0.0
-        self.report_interval = 30
-
-    def step(self):
-        start_time = time.time()
-
-        # Get capture.
-        capture = self.capture.read()
-        self.sum_capture_time += time.time() - start_time
-
-        # Trigger trackers in given order (decreasing processing time).
-        for tracker in self.trackers.values():
-            tracker.trigger(capture)
-
-        landmarks = {}
-
-        # Wait for tracker results in reversed order (increasing processing time)
-        for tracker in reversed(self.trackers.values()):
-            tracker_landmarks = tracker.output.get()
-            landmarks.update(tracker_landmarks)
-            tracker.tracker.show_visualization()
-
-        self.sum_overall_time += time.time() - start_time
-        if self.step_count % self.report_interval == 0:
-            status = (
-                f"Step {self.step_count} mean times: "
-                f"overall {self.sum_overall_time / self.report_interval:.3f}s"
-                f" | capture {self.sum_capture_time / self.report_interval:.3f}s"
-                f" | processing: {(self.sum_overall_time - self.sum_capture_time) / self.report_interval:.3f}s"
-            )
-            for tracker in self.trackers.values():
-                status += f" | {tracker.tracker.name} {tracker.tracker.sum_processing_time / self.report_interval:.3f}s"
-                tracker.tracker.sum_processing_time = 0.0
-
-            print(status)
-            self.sum_overall_time = 0.0
-            self.sum_capture_time = 0.0
-
-        self.step_count += 1
-
-        return landmarks
+    def get_capture(self):
+        return self.capture.read()
 
     def stop(self):
         self.capture.release()
-
-        for tracker in self.trackers.values():
-            tracker.input.put((True, None))
-            tracker.thread.join()
+        super().stop()

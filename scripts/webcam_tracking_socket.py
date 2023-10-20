@@ -33,6 +33,9 @@ class WebcamTrackingSocket:
         parser.add_argument("--mediapipe", default=False, action="store_true", help="enable tracking with mediapipe")
         parser.add_argument("--visualize", default=False, action="store_true", help="visualize markers")
         parser.add_argument(
+            "--frame-id", default="", type=str, help="the ID of the frame that is attached to the landmarks"
+        )
+        parser.add_argument(
             "--log-level",
             default="info",
             type=str.lower,
@@ -44,7 +47,11 @@ class WebcamTrackingSocket:
         logging.basicConfig(format="%(levelname)s: %(message)s", level=args.log_level.upper())
 
         self.webcam_tracking = WebcamTracking(
-            args.camera_config_file, with_aruco=args.aruco, with_mediapipe=args.mediapipe, visualize=args.visualize
+            args.camera_config_file,
+            with_aruco=args.aruco,
+            with_mediapipe=args.mediapipe,
+            visualize=args.visualize,
+            frame_id=args.frame_id,
         )
         self.standalone = args.standalone
 

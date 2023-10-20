@@ -33,6 +33,9 @@ class AzureTrackingSocket:
         parser.add_argument("--mediapipe", default=False, action="store_true", help="enable tracking with mediapipe")
         parser.add_argument("--visualize", default=False, action="store_true", help="visualize markers")
         parser.add_argument(
+            "--frame-id", default="", type=str, help="the ID of the frame that is attached to the landmarks"
+        )
+        parser.add_argument(
             "--color-resolution",
             default="1536P",
             type=str,
@@ -46,6 +49,7 @@ class AzureTrackingSocket:
             choices=AzureTracking.depth_mode_mapping,
             help="the depth mode to use",
         )
+
         parser.add_argument(
             "--log-level",
             default="info",
@@ -64,6 +68,7 @@ class AzureTrackingSocket:
             visualize=args.visualize,
             color_resolution=args.color_resolution,
             depth_mode=args.depth_mode,
+            frame_id=args.frame_id,
         )
         self.standalone = args.standalone
 
