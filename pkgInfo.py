@@ -32,4 +32,6 @@ sqComments = {
     "PY05": "We execute pylint ourselves for sonarqube.",
 }
 
+scripts = {"unittest": "ci-unit-tests.sh"}
+
 # EOF
