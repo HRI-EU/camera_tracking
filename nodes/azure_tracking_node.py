@@ -41,8 +41,6 @@ class AzureTrackingNode:
         while not rospy.is_shutdown():
             landmarks = self.azure_tracking.step()
             self.landmarks_publisher.publish(json.dumps(landmarks))
-            with open(f"{landmarks['header']['seq']}_landmarks.json", "w", encoding="utf-8") as file:
-                json.dump(landmarks, file)
 
     def stop(self):
         self.azure_tracking.stop()
