@@ -94,8 +94,6 @@ class BodyTracking(BaseTracking):
         return landmarks
 
     def process(self, data: pykinect.Capture) -> Dict:
-        start_time = time.time()
-
         # Get the updated body tracker frame.
         body_frame = self.body_tracker.update()
         body_landmarks = self.body_frame_to_landmarks(body_frame)
@@ -111,9 +109,14 @@ class BodyTracking(BaseTracking):
                 self.visualization = cv2.cvtColor(self.visualization, cv2.COLOR_GRAY2RGB)
                 self.visualization = body_frame.draw_bodies(self.visualization)
 
-        self.sum_processing_time += time.time() - start_time
-
         return body_landmarks
+
+
+def get_gray_from_capture(capture):
+    success, color_image = capture.get_color_image()
+    if not success:
+        return False, None
+    return True, cv2.cvtColor(color_image, cv2.COLOR_BGRA2GRAY)
 
 
 class AzureTracking(BaseCamera):
@@ -133,6 +136,12 @@ class AzureTracking(BaseCamera):
         "WFOV_UNBINNED": pykinect.K4A_DEPTH_MODE_WFOV_UNBINNED,
     }
 
+    fps_mapping = {
+        "5": pykinect.K4A_FRAMES_PER_SECOND_5,
+        "15": pykinect.K4A_FRAMES_PER_SECOND_15,
+        "30": pykinect.K4A_FRAMES_PER_SECOND_30,
+    }
+
     def __init__(
         self,
         with_aruco: bool = True,
@@ -141,6 +150,7 @@ class AzureTracking(BaseCamera):
         visualize: bool = True,
         color_resolution: str = "1536P",
         depth_mode: str = "NFOV_2X2BINNED",
+        fps: str = "30",
         frame_id: str = "",
     ):
         super().__init__(frame_id=frame_id)
@@ -159,6 +169,9 @@ class AzureTracking(BaseCamera):
                 f"Unknown depth mode '{depth_mode}'. Known ones are {AzureTracking.depth_mode_mapping}."
             )
 
+        if fps not in AzureTracking.fps_mapping:
+            raise AssertionError(f"Unknown fps '{fps}'. Known ones are {AzureTracking.fps_mapping}.")
+
         # Initialize the library.
         pykinect.initialize_libraries(
             module_k4a_path=get_custom_k4a_path(), module_k4abt_path=get_custom_k4abt_path(), track_body=with_body
@@ -174,7 +187,8 @@ class AzureTracking(BaseCamera):
         device_config.depth_mode = (
             AzureTracking.depth_mode_mapping[depth_mode] if with_body else pykinect.K4A_DEPTH_MODE_OFF
         )
-        device_config.camera_fps = pykinect.K4A_FRAMES_PER_SECOND_30
+        device_config.camera_fps = AzureTracking.fps_mapping[fps]
+        device_config.color_format = pykinect.K4A_IMAGE_FORMAT_COLOR_BGRA32
 
         # Start device.
         self.device = pykinect.start_device(config=device_config)
@@ -185,21 +199,6 @@ class AzureTracking(BaseCamera):
         )
 
         # We add trackers in order of expected processing time (decreasingly).
-        if with_body:
-            body_tracking = BodyTracking(
-                visualize=visualize,
-                transformation_matrix=color_camera_parameters["transformation_matrix_depth_to_color"],
-            )
-            self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))
-
-        if with_mediapipe:
-            from .mediapipe_tracking import MediapipeTracking
-
-            mediapipe_tracking = MediapipeTracking(visualize=visualize)
-            self.trackers["mediapipe"] = ThreadedTracker(
-                mediapipe_tracking, input_function=lambda capture: capture.get_color_image()
-            )
-
         if with_aruco:
             from .aruco_tracking import ArucoTracking
 
@@ -209,8 +208,23 @@ class AzureTracking(BaseCamera):
                 visualize=visualize,
             )
             self.trackers["aruco"] = ThreadedTracker(
-                aruco_tracking, input_function=lambda capture: capture.get_color_image()
+                aruco_tracking, input_function=lambda capture: get_gray_from_capture(capture)
             )
+
+        if with_mediapipe:
+            from .mediapipe_tracking import MediapipeTracking
+
+            mediapipe_tracking = MediapipeTracking(visualize=visualize)
+            self.trackers["mediapipe"] = ThreadedTracker(
+                mediapipe_tracking, input_function=lambda capture: capture.get_color_image()
+            )
+
+        if with_body:
+            body_tracking = BodyTracking(
+                visualize=visualize,
+                transformation_matrix=color_camera_parameters["transformation_matrix_depth_to_color"],
+            )
+            self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))
 
     def get_capture(self):
         return self.device.update()

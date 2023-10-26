@@ -31,6 +31,7 @@ class AzureTrackingNode:
             visualize=rospy.get_param("~visualize"),
             color_resolution=rospy.get_param("~color_resolution"),
             depth_mode=rospy.get_param("~depth_mode"),
+            fps=rospy.get_param("~fps"),
             frame_id=rospy.get_param("~frame_id"),
         )
         self.landmarks_publisher = rospy.Publisher("/landmarks", std_msgs.msg.String, queue_size=1)

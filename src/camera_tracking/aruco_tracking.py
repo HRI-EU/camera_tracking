@@ -34,6 +34,8 @@ class ArucoTracking(BaseTracking):
         self.aruco_parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
         self.aruco_parameters.cornerRefinementWinSize = 4
         self.aruco_parameters.minDistanceToBorder = 2
+        self.aruco_parameters.minMarkerPerimeterRate = 0.03
+        self.aruco_parameters.maxMarkerPerimeterRate = 0.3
 
         # We use a default length of 1m, and scale the markers on the receiving side.
         self.default_marker_length = 1.0
@@ -56,8 +58,6 @@ class ArucoTracking(BaseTracking):
         @return: The found aruco landmarks.
         """
 
-        start_time = time.time()
-
         # Find all markers in the image.
         corners, ids, _ = cv2.aruco.detectMarkers(data, self.aruco_dict, parameters=self.aruco_parameters)
 
@@ -69,8 +69,7 @@ class ArucoTracking(BaseTracking):
 
         landmarks = defaultdict(list)
         if ids is not None:
-            ids = ids.flatten()
-            for marker_corners, marker_id in zip(corners, ids):
+            for marker_corners, marker_id in zip(corners, ids.flatten()):
                 # Estimate pose of the marker.
                 rotation_vector, translation_vector, _ = cv2.aruco.estimatePoseSingleMarkers(
                     marker_corners, self.default_marker_length, self.camera_matrix, self.distortion_coefficients
@@ -94,8 +93,6 @@ class ArucoTracking(BaseTracking):
                         translation_vector,
                         0.30,
                     )
-
-        self.sum_processing_time += time.time() - start_time
 
         return landmarks
 

@@ -102,11 +102,10 @@ class MediapipeTracking(BaseTracking):
     def process(self, data: numpy.ndarray, options: Optional[Dict] = None):
         """
         Process an image.
-        @param image: The image to be processed. If the image is colored we assume BGR.
+        @param data: The image to be processed. If the image is colored we assume BGR.
         @param options: A dictionary defining which landmarks to compute.
         @return: The found landmarks.
         """
-        start_time = time.time()
 
         if options is None:
             options = self.default_options
@@ -165,8 +164,6 @@ class MediapipeTracking(BaseTracking):
             if with_hands and results_hands.multi_hand_landmarks:
                 for hand_landmarks in results_hands.multi_hand_landmarks:
                     mp_drawing.draw_landmarks(self.visualization, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-
-        self.sum_processing_time += time.time() - start_time
 
         return landmarks
 

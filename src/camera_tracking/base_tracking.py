@@ -53,26 +53,30 @@ class ThreadedTracker:
 
     def worker(self):
         while True:
-            success, data = self.input.get()
-            if not success:
-                print(f"Data is not available for {self.tracker.name}.")
-                self.output.put({})
-                continue
-
+            data = self.input.get()
             if data is None:
                 break
 
             # Compute landmarks and put them into the output buffer.
             try:
-                landmarks = self.tracker.process(data)
+                start_time = time.time()
+                success, input_data = self.input_function(data)
+                if not success:
+                    print(f"Data is not available for '{self.tracker.name}'.")
+                    self.output.put({})
+                    continue
+
+                landmarks = self.tracker.process(input_data)
+                self.tracker.sum_processing_time += time.time() - start_time
                 self.output.put(landmarks)
+
             except Exception:
                 # A 'None' signals the outside that the thread crashed.
                 self.output.put(None)
                 raise
 
     def trigger(self, data):
-        self.input.put(self.input_function(data))
+        self.input.put(data)
 
 
 class BaseCamera:
@@ -133,5 +137,5 @@ class BaseCamera:
 
     def stop(self):
         for tracker in self.trackers.values():
-            tracker.input.put((True, None))
+            tracker.input.put(None)
             tracker.thread.join()

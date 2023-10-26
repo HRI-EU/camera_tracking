@@ -49,7 +49,13 @@ class AzureTrackingSocket:
             choices=AzureTracking.depth_mode_mapping,
             help="the depth mode to use",
         )
-
+        parser.add_argument(
+            "--fps",
+            default="30",
+            type=str,
+            choices=AzureTracking.fps_mapping,
+            help="the fps to use",
+        )
         parser.add_argument(
             "--log-level",
             default="info",
@@ -68,6 +74,7 @@ class AzureTrackingSocket:
             visualize=args.visualize,
             color_resolution=args.color_resolution,
             depth_mode=args.depth_mode,
+            fps=args.fps,
             frame_id=args.frame_id,
         )
         self.standalone = args.standalone
