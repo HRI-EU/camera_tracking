@@ -15,7 +15,6 @@
 #
 
 from typing import Dict, Optional
-import time
 import numpy
 import cv2
 from scipy.spatial.transform import Rotation
