@@ -63,7 +63,12 @@ class ArucoTracking(BaseTracking):
 
         if self.visualize:
             # Make a copy of the image, as the outside might assume that we do not alter the image.
-            self.visualization = data.copy()
+            # In case of a grayscale image, convert it to BGR as this looks nicer.
+            if len(data.shape) == 2:
+                self.visualization = cv2.cvtColor(data, cv2.COLOR_GRAY2BGR)
+            else:
+                self.visualization = data.copy()
+
             # Visualize the found markers.
             cv2.aruco.drawDetectedMarkers(self.visualization, corners, ids)
 
