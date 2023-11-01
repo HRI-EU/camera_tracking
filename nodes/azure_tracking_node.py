@@ -34,7 +34,9 @@ class AzureTrackingNode:
             fps=rospy.get_param("~fps"),
             frame_id=rospy.get_param("~frame_id"),
         )
-        self.landmarks_publisher = rospy.Publisher("/landmarks", std_msgs.msg.String, queue_size=1)
+        self.landmarks_publisher = rospy.Publisher(
+            f"/landmarks/{self.azure_tracking.frame_id}", std_msgs.msg.String, queue_size=1
+        )
         rospy.loginfo("Initialization done.")
 
     def run(self):
