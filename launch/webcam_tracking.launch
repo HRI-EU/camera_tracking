@@ -1,0 +1,16 @@
+<launch>
+    <arg name="camera_config_file"/>
+    <arg name="frame_id"/>
+    <arg name="with_aruco" default="false"/>
+    <arg name="with_mediapipe" default="false"/>
+    <arg name="visualize" default="true"/>
+
+    <node name="webcam_tracking_$(arg frame_id)" pkg="camera_tracking" type="webcam_tracking_node.py" output="screen" respawn="false">
+        <param name="camera_config_file" type="str" value="$(arg camera_config_file)"/>
+        <param name="frame_id" type="str" value="$(arg frame_id)"/>
+        <param name="with_aruco" type="bool" value="$(arg with_aruco)"/>
+        <param name="with_mediapipe" type="bool" value="$(arg with_mediapipe)"/>
+        <param name="visualize" type="bool" value="$(arg visualize)"/>
+    </node>
+
+</launch>
