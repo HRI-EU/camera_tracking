@@ -94,42 +94,54 @@ class BaseCamera:
     def get_capture(self):
         raise NotImplementedError("This method must be implemented in the child class.")
 
-    def step(self) -> dict:
+    def step(self, process=True) -> dict:
         start_time = time.time()
 
         # Get capture.
         capture = self.get_capture()
         capture_time = time.time()
-        self.sum_capture_time += capture_time - start_time
-
-        # Trigger trackers in given order (decreasing processing time).
-        for tracker in self.trackers.values():
-            tracker.trigger(capture)
-
-        # Wait for tracker results in reversed order (increasing processing time)
         landmarks = {
             "header": {"timestamp": capture_time, "frame_id": self.frame_id, "seq": self.step_count},
             "data": {},
         }
-        for tracker in reversed(self.trackers.values()):
-            landmarks["data"][tracker.tracker.name] = tracker.output.get()
-            tracker.tracker.show_visualization()
 
-        self.sum_overall_time += time.time() - start_time
-        if self.step_count % self.report_interval == 0:
-            status = (
-                f"Step {self.step_count} mean times: "
-                f"overall {self.sum_overall_time / self.report_interval:.3f}s"
-                f" | capture {self.sum_capture_time / self.report_interval:.3f}s"
-                f" | processing: {(self.sum_overall_time - self.sum_capture_time) / self.report_interval:.3f}s"
-            )
+        if process:
+            capture_time = time.time()
+            self.sum_capture_time += capture_time - start_time
+
+            # Trigger trackers in given order (decreasing processing time).
             for tracker in self.trackers.values():
-                status += f" | {tracker.tracker.name} {tracker.tracker.sum_processing_time / self.report_interval:.3f}s"
-                tracker.tracker.sum_processing_time = 0.0
+                tracker.trigger(capture)
 
-            print(status)
-            self.sum_overall_time = 0.0
-            self.sum_capture_time = 0.0
+            # Wait for tracker results in reversed order (increasing processing time)
+            landmarks = {
+                "header": {"timestamp": capture_time, "frame_id": self.frame_id, "seq": self.step_count},
+                "data": {},
+            }
+            for tracker in reversed(self.trackers.values()):
+                landmarks["data"][tracker.tracker.name] = tracker.output.get()
+                tracker.tracker.show_visualization()
+
+            self.sum_overall_time += time.time() - start_time
+            if self.step_count % self.report_interval == 0:
+                status = (
+                    f"Step {self.step_count} mean times: "
+                    f"overall {self.sum_overall_time / self.report_interval:.3f}s"
+                    f" | capture {self.sum_capture_time / self.report_interval:.3f}s"
+                    f" | processing: {(self.sum_overall_time - self.sum_capture_time) / self.report_interval:.3f}s"
+                )
+                for tracker in self.trackers.values():
+                    status += (
+                        f" | {tracker.tracker.name} {tracker.tracker.sum_processing_time / self.report_interval:.3f}s"
+                    )
+                    tracker.tracker.sum_processing_time = 0.0
+
+                print(status)
+                self.sum_overall_time = 0.0
+                self.sum_capture_time = 0.0
+        else:
+            if self.step_count % self.report_interval == 0:
+                print(f"Step {self.step_count} idle.")
 
         self.step_count += 1
 

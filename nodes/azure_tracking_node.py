@@ -41,7 +41,7 @@ class AzureTrackingNode:
 
     def run(self):
         while not rospy.is_shutdown():
-            landmarks = self.azure_tracking.step()
+            landmarks = self.azure_tracking.step(self.landmarks_publisher.get_num_connections() > 0)
             self.landmarks_publisher.publish(json.dumps(landmarks))
 
     def stop(self):
