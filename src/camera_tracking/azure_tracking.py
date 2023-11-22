@@ -94,7 +94,7 @@ class BodyTracking(BaseTracking):
 
     def process(self, data: pykinect.Capture) -> Dict:
         # Get the updated body tracker frame.
-        body_frame = self.body_tracker.update()
+        body_frame = self.body_tracker.update(data)
         body_landmarks = self.body_frame_to_landmarks(body_frame)
 
         if self.visualize:
