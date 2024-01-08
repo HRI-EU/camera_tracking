@@ -52,8 +52,14 @@ def get_color_camera_calibration(device, depth_mode, color_resolution) -> Dict:
 class BodyTracking(BaseTracking):
     millimeter_to_meter_ratio = 1000.0
 
-    def __init__(self, visualize: bool = True, transformation_matrix: Optional[numpy.ndarray] = None):
+    def __init__(
+        self,
+        visualize: bool = True,
+        body_max_distance: float = 0,
+        transformation_matrix: Optional[numpy.ndarray] = None,
+    ):
         self.transformation_matrix = transformation_matrix
+        self.body_max_distance = body_max_distance
         # Initialize the body tracker.
         self.body_tracker = pykinect.start_body_tracker(pykinect.K4ABT_DEFAULT_MODEL)
         super().__init__("body", visualize=visualize)
@@ -92,7 +98,37 @@ class BodyTracking(BaseTracking):
 
         return landmarks
 
+    @staticmethod
+    def image_as_numpy_array(image: pykinect.Image) -> numpy.ndarray:
+        image_size = image.get_size()
+        buffer_array = numpy.ctypeslib.as_array(image.buffer_pointer, shape=(image_size,))
+
+        if image.format in [pykinect.K4A_IMAGE_FORMAT_DEPTH16, pykinect.K4A_IMAGE_FORMAT_IR16]:
+            return numpy.frombuffer(buffer_array, dtype="<u2")
+
+        raise AssertionError(f"Cannot handle image format '{image.format}'.")
+
     def process(self, data: pykinect.Capture) -> Dict:
+        # TODO: We change the original data of the capture. We assume no other tracker is using depth and IR.
+        # Instead we should make a copy of the capture and update depth an IR.
+        if self.body_max_distance > 0:
+            # Crop the captured depth and infrared images.
+            depth_image_object = data.get_depth_image_object()
+            ir_image_object = data.get_ir_image_object()
+
+            # Check the images have been read correctly.
+            if depth_image_object.is_valid() and ir_image_object.is_valid():
+                depth_image = self.image_as_numpy_array(depth_image_object)
+                ir_image = self.image_as_numpy_array(ir_image_object)
+
+                # Filter images w.r.t the depth
+                mask = depth_image > int(round(self.body_max_distance * self.millimeter_to_meter_ratio))
+                depth_image[mask] = 0
+                mask = depth_image == 0
+                ir_image[mask] = 0
+            else:
+                print("Problem.")
+
         # Get the updated body tracker frame.
         body_frame = self.body_tracker.update(data)
         body_landmarks = self.body_frame_to_landmarks(body_frame)
@@ -106,6 +142,8 @@ class BodyTracking(BaseTracking):
                 # Convert the depth image to color and draw the skeletons.
                 self.visualization = cv2.convertScaleAbs(depth_image, alpha=0.05)
                 self.visualization = cv2.cvtColor(self.visualization, cv2.COLOR_GRAY2RGB)
+                mask = self.visualization[:, :, 0] == 0
+                self.visualization[:, :, 0][mask] = 200
                 self.visualization = body_frame.draw_bodies(self.visualization)
 
         return body_landmarks
@@ -151,6 +189,7 @@ class AzureTracking(BaseCamera):
         depth_mode: str = "NFOV_2X2BINNED",
         fps: str = "30",
         frame_id: str = "",
+        body_max_distance: float = 0.0,
     ):
         super().__init__(frame_id=frame_id)
 
@@ -221,6 +260,7 @@ class AzureTracking(BaseCamera):
         if with_body:
             body_tracking = BodyTracking(
                 visualize=visualize,
+                body_max_distance=body_max_distance,
                 transformation_matrix=color_camera_parameters["transformation_matrix_depth_to_color"],
             )
             self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))

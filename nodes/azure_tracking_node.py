@@ -33,6 +33,7 @@ class AzureTrackingNode:
             depth_mode=rospy.get_param("~depth_mode"),
             fps=rospy.get_param("~fps"),
             frame_id=rospy.get_param("~frame_id"),
+            body_max_distance=rospy.get_param("~body_max_distance"),
         )
         self.landmarks_publisher = rospy.Publisher(
             f"/landmarks/{self.azure_tracking.frame_id}", std_msgs.msg.String, queue_size=1

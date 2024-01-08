@@ -17,7 +17,8 @@
 import os
 from enum import Enum
 import ctypes
-from pykinect_azure.k4abt import _k4abt, _k4abtTypes, Tracker
+from pykinect_azure.k4a import _k4atypes
+from pykinect_azure.k4abt import _k4abt, _k4abtTypes, Tracker, Frame, Body2d
 
 
 class K4ABT_JOINTS(Enum):
@@ -107,6 +108,15 @@ def get_tracker_configuration(self, model_type):
 
 
 Tracker.get_tracker_configuration = get_tracker_configuration
+
+
+# Manually fix bodyIdx/bod.id bug, see https://github.com/ibaiGorordo/pyKinectAzure/pull/110
+def get_body2d(self, bodyIdx=0, dest_camera=_k4atypes.K4A_CALIBRATION_TYPE_DEPTH):
+    body_handle = self.get_body(bodyIdx).handle()
+    return Body2d.create(body_handle, self.calibration, body_handle.id, dest_camera)
+
+
+Frame.get_body2d = get_body2d
 
 
 import pykinect_azure
