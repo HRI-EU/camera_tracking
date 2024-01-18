@@ -14,7 +14,9 @@
 #
 #
 
-from typing import Dict, Optional
+from __future__ import annotations
+
+from typing import Optional
 import numpy
 import cv2
 from scipy.spatial.transform import Rotation
@@ -25,7 +27,7 @@ from .pykinect_azure_fix import pykinect_azure as pykinect
 from .pykinect_azure_fix import K4ABT_JOINTS, get_custom_k4a_path, get_custom_k4abt_path
 
 
-def get_color_camera_calibration(device, depth_mode, color_resolution) -> Dict:
+def get_color_camera_calibration(device, depth_mode, color_resolution) -> dict:
     calibration = device.get_calibration(depth_mode, color_resolution)
 
     config = {name: getattr(calibration.color_params, name) for name, _ in calibration.color_params._fields_}
@@ -64,7 +66,7 @@ class BodyTracking(BaseTracking):
         self.body_tracker = pykinect.start_body_tracker(pykinect.K4ABT_DEFAULT_MODEL)
         super().__init__("body", visualize=visualize)
 
-    def body_frame_to_landmarks(self, body_frame: pykinect.Frame) -> Dict[str, Dict]:
+    def body_frame_to_landmarks(self, body_frame: pykinect.Frame) -> dict[str, dict]:
         # body_<joint_id>_<body_id>, e.g. body_right_hand_0
         landmarks = {}
         for body in body_frame.get_bodies():
@@ -108,30 +110,34 @@ class BodyTracking(BaseTracking):
 
         raise AssertionError(f"Cannot handle image format '{image.format}'.")
 
-    def process(self, data: pykinect.Capture) -> Dict:
+    def process(self, data: pykinect.Capture) -> dict:
+        # We check is depth and infrared are valid to prevent of body_tracker.update() from raising exception.
+        depth_image_object = data.get_depth_image_object()
+        ir_image_object = data.get_ir_image_object()
+        if not depth_image_object.is_valid() or not ir_image_object.is_valid():
+            print(f"Data is not available for '{self.name}'.")
+            return {}
+
         # TODO: We change the original data of the capture. We assume no other tracker is using depth and IR.
         # Instead we should make a copy of the capture and update depth an IR.
         if self.body_max_distance > 0:
             # Crop the captured depth and infrared images.
-            depth_image_object = data.get_depth_image_object()
-            ir_image_object = data.get_ir_image_object()
+            depth_image = self.image_as_numpy_array(depth_image_object)
+            ir_image = self.image_as_numpy_array(ir_image_object)
 
-            # Check the images have been read correctly.
-            if depth_image_object.is_valid() and ir_image_object.is_valid():
-                depth_image = self.image_as_numpy_array(depth_image_object)
-                ir_image = self.image_as_numpy_array(ir_image_object)
-
-                # Filter images w.r.t the depth
-                mask = depth_image > int(round(self.body_max_distance * self.millimeter_to_meter_ratio))
-                depth_image[mask] = 0
-                mask = depth_image == 0
-                ir_image[mask] = 0
-            else:
-                print("Problem.")
+            # Filter images w.r.t the depth.
+            mask = depth_image > int(round(self.body_max_distance * self.millimeter_to_meter_ratio))
+            depth_image[mask] = 0
+            mask = depth_image == 0
+            ir_image[mask] = 0
 
         # Get the updated body tracker frame.
-        body_frame = self.body_tracker.update(data)
-        body_landmarks = self.body_frame_to_landmarks(body_frame)
+        try:
+            body_frame = self.body_tracker.update(data)
+            body_landmarks = self.body_frame_to_landmarks(body_frame)
+        except Exception as e:
+            print(f"Body tracker update raised exception: {e}")
+            return {}
 
         if self.visualize:
             # Get the depth image from the capture.
