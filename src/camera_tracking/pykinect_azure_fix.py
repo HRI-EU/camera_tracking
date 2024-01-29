@@ -19,6 +19,7 @@ from enum import Enum
 import ctypes
 from pykinect_azure.k4a import _k4atypes
 from pykinect_azure.k4abt import _k4abt, _k4abtTypes, Tracker, Frame, Body2d
+import cv2
 
 
 class K4ABT_JOINTS(Enum):
@@ -110,7 +111,39 @@ def get_tracker_configuration(self, model_type):
 Tracker.get_tracker_configuration = get_tracker_configuration
 
 
-# Manually fix bodyIdx/bod.id bug, see https://github.com/ibaiGorordo/pyKinectAzure/pull/110
+# Manually fix bug:
+#  color = (int (body_colors[self.id][0]), int (body_colors[self.id][1]), int (body_colors[self.id][2]))
+#  IndexError: index 256 is out of bounds for axis 0 with size 256
+def draw(self, image, only_segments=False):
+    color_number = _k4abtTypes.body_colors.shape[0]
+    color = (
+        int(_k4abtTypes.body_colors[self.id % color_number][0]),
+        int(_k4abtTypes.body_colors[self.id % color_number][1]),
+        int(_k4abtTypes.body_colors[self.id % color_number][2]),
+    )
+
+    for segmentId in range(len(_k4abtTypes.K4ABT_SEGMENT_PAIRS)):
+        segment_pair = _k4abtTypes.K4ABT_SEGMENT_PAIRS[segmentId]
+        point1 = self.joints[segment_pair[0]].get_coordinates()
+        point2 = self.joints[segment_pair[1]].get_coordinates()
+
+        if (point1[0] == 0 and point1[1] == 0) or (point2[0] == 0 and point2[1] == 0):
+            continue
+        image = cv2.line(image, point1, point2, color, 2)
+
+    if only_segments:
+        return image
+
+    for joint in self.joints:
+        image = cv2.circle(image, joint.get_coordinates(), 3, color, 3)
+
+    return image
+
+
+Body2d.draw = draw
+
+
+# Manually fix bodyIdx/body.id bug, see https://github.com/ibaiGorordo/pyKinectAzure/pull/110
 def get_body2d(self, bodyIdx=0, dest_camera=_k4atypes.K4A_CALIBRATION_TYPE_DEPTH):
     body_handle = self.get_body(bodyIdx).handle()
     return Body2d.create(body_handle, self.calibration, body_handle.id, dest_camera)

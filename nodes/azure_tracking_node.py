@@ -24,11 +24,12 @@ from camera_tracking.azure_tracking import AzureTracking
 
 class AzureTrackingNode:
     def __init__(self):
+        self.visualize = rospy.get_param("~visualize")
         self.azure_tracking = AzureTracking(
             with_aruco=rospy.get_param("~with_aruco"),
             with_body=rospy.get_param("~with_body"),
             with_mediapipe=rospy.get_param("~with_mediapipe"),
-            visualize=rospy.get_param("~visualize"),
+            visualize=self.visualize,
             color_resolution=rospy.get_param("~color_resolution"),
             depth_mode=rospy.get_param("~depth_mode"),
             fps=rospy.get_param("~fps"),
@@ -42,7 +43,7 @@ class AzureTrackingNode:
 
     def run(self):
         while not rospy.is_shutdown():
-            landmarks = self.azure_tracking.step(self.landmarks_publisher.get_num_connections() > 0)
+            landmarks = self.azure_tracking.step(self.landmarks_publisher.get_num_connections() > 0 or self.visualize)
             self.landmarks_publisher.publish(json.dumps(landmarks))
 
     def stop(self):
