@@ -21,15 +21,7 @@ import os
 import json
 import matplotlib.pyplot as plt
 
-
-def get_angle(quaternion_1: dict, quaternion_2: dict) -> float:
-    delta_w = (
-        quaternion_1["x"] * quaternion_2["x"]
-        + quaternion_1["y"] * quaternion_2["y"]
-        + quaternion_1["z"] * quaternion_2["z"]
-        + quaternion_1["w"] * quaternion_2["w"]
-    )
-    return 2 * math.acos(abs(min(delta_w, 1.0)))
+from camera_tracking.aruco_tracking import angle_between_quaternions
 
 
 def main():
@@ -56,7 +48,7 @@ def main():
                 print(f"{landmark_id} has multiple detections.")
 
             reference_data = reference_landmarks[landmark_id]
-            angle = get_angle(data[0]["orientation"], reference_data[0]["orientation"])
+            angle = angle_between_quaternions(data[0]["orientation"], reference_data[0]["orientation"])
             angle_degrees = math.degrees(angle)
             if angle_degrees > 10:
                 print(f"{landmark_id}. angle[deg] {angle_degrees}")
@@ -66,37 +58,37 @@ def main():
             result["reprojection_error_1"].append(landmarks[marker_id][0]["solutions"][1]["reprojection_error"])
 
             result["angle_0_to_reference_0"].append(
-                get_angle(
+                angle_between_quaternions(
                     landmarks[marker_id][0]["solutions"][0]["orientation"],
                     reference_landmarks[marker_id][0]["orientation"],
                 )
             )
             result["angle_1_to_reference_0"].append(
-                get_angle(
+                angle_between_quaternions(
                     landmarks[marker_id][0]["solutions"][1]["orientation"],
                     reference_landmarks[marker_id][0]["orientation"],
                 )
             )
             result["angle_0_to_last_0"].append(
-                get_angle(
+                angle_between_quaternions(
                     landmarks[marker_id][0]["solutions"][0]["orientation"],
                     last_landmarks[marker_id][0]["solutions"][0]["orientation"],
                 )
             )
             result["angle_1_to_last_1"].append(
-                get_angle(
+                angle_between_quaternions(
                     landmarks[marker_id][0]["solutions"][1]["orientation"],
                     last_landmarks[marker_id][0]["solutions"][1]["orientation"],
                 )
             )
             result["angle_0_to_last_1"].append(
-                get_angle(
+                angle_between_quaternions(
                     landmarks[marker_id][0]["solutions"][0]["orientation"],
                     last_landmarks[marker_id][0]["solutions"][1]["orientation"],
                 )
             )
             result["angle_1_to_last_0"].append(
-                get_angle(
+                angle_between_quaternions(
                     landmarks[marker_id][0]["solutions"][1]["orientation"],
                     last_landmarks[marker_id][0]["solutions"][0]["orientation"],
                 )

@@ -7,6 +7,7 @@
     <arg name="color_resolution" default="1536P"/>
     <arg name="depth_mode" default="NFOV_2X2BINNED"/>
     <arg name="body_max_distance" default="0"/>
+    <arg name="aruco_with_tracking" default="false"/>
     <arg name="fps" default="30"/>
 
     <node name="azure_tracking_$(arg frame_id)" pkg="camera_tracking" type="azure_tracking_node.py" output="screen" respawn="false">
@@ -19,6 +20,7 @@
         <param name="depth_mode" type="str" value="$(arg depth_mode)"/>
         <param name="fps" type="str" value="$(arg fps)"/>
         <param name="body_max_distance" type="double" value="$(arg body_max_distance)"/>
+        <param name="aruco_with_tracking" type="bool" value="$(arg aruco_with_tracking)"/>
     </node>
 
 </launch>

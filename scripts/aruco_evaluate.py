@@ -26,10 +26,13 @@ from camera_tracking.camera_helper import load_camera_parameters
 
 def main():
     load_path = "/hri/localdisk/stephanh/aruco_evaluation/data"
-    save_path = "/hri/localdisk/stephanh/aruco_evaluation/result1"
+    save_path = "/hri/localdisk/stephanh/aruco_evaluation/result2"
     camera_parameters = load_camera_parameters(os.path.join(load_path, "camera.yaml"))
     aruco_tracking = ArucoTracking(
-        camera_parameters["camera_matrix"], camera_parameters["distortion_coefficients"], visualize=True
+        camera_parameters["camera_matrix"],
+        camera_parameters["distortion_coefficients"],
+        visualize=True,
+        with_tracking=True,
     )
     aruco_tracking.write_detector_parameters(os.path.join(save_path, "aruco_parameters.yaml"))
 
@@ -41,6 +44,7 @@ def main():
         index = int(os.path.basename(filename).split("_")[0])
         print(f"{index}. {filename}")
         landmarks = aruco_tracking.process(image)
+        print(landmarks)
         all_landmarks.append({"image_index": index, "data": landmarks})
         cv2.imwrite(os.path.join(save_path, f"{index}_visualization.png"), aruco_tracking.visualization)
 

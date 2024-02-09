@@ -196,6 +196,7 @@ class AzureTracking(BaseCamera):
         fps: str = "30",
         frame_id: str = "",
         body_max_distance: float = 0.0,
+        aruco_with_tracking: bool = False,
     ):
         super().__init__(frame_id=frame_id)
 
@@ -250,6 +251,7 @@ class AzureTracking(BaseCamera):
                 color_camera_parameters["camera_matrix"],
                 color_camera_parameters["distortion_coefficients"],
                 visualize=visualize,
+                with_tracking=aruco_with_tracking,
             )
             self.trackers["aruco"] = ThreadedTracker(
                 aruco_tracking, input_function=lambda capture: get_gray_from_capture(capture)
