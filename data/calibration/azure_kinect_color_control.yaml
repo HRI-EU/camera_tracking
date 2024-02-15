@@ -1,0 +1,8 @@
+- name: "BRIGHTNESS"
+  value: 100
+- name: "GAIN"
+  value: 128
+- name: "SHARPNESS"
+  value: 4
+- name: "CONTRAST"
+  value: 4

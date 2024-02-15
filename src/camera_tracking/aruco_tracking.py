@@ -21,12 +21,32 @@ from typing import Optional, Callable
 from collections import defaultdict, deque
 import json
 import time
+from difflib import SequenceMatcher
 import cv2
 import numpy
 from scipy.spatial.transform import Rotation
 
 from camera_tracking.camera_helper import load_camera_parameters, save_camera_parameters
 from camera_tracking.base_tracking import BaseTracking
+
+
+def get_highlighted_string_difference(before: Optional[str], after: str) -> tuple[bool, str]:
+    if before is None:
+        return True, after
+
+    if before == after:
+        return False, after
+
+    matches = SequenceMatcher(None, before, after).get_matching_blocks()
+    highlighted_after = ""
+    index_after = 0
+    for match in matches:
+        if match.b > index_after:
+            highlighted_after += f"\033[94m{after[index_after : match.b]}\033[0m"
+        index_after = match.b + match.size
+        highlighted_after += after[match.b : index_after]
+
+    return True, highlighted_after
 
 
 class TrackID:
@@ -73,7 +93,7 @@ class ArucoTrackOrientation:
                     break
 
         mean_position /= count
-        return {"x": mean_position[0], "y": mean_position[1], "z": mean_position[2]}
+        return dict(zip("xyz", mean_position))
 
     def get_mean_orientation(self) -> dict:
         count = 0
@@ -99,7 +119,6 @@ class ArucoTrackOrientation:
                         )
 
                 if count and numpy.dot(mean_orientation, orientation) < 0.0:
-                    print("Reverting sign.")
                     orientation *= -1
 
                 mean_orientation += orientation
@@ -110,19 +129,21 @@ class ArucoTrackOrientation:
                     break
 
         mean_orientation /= numpy.linalg.norm(mean_orientation)
-        return {"x": mean_orientation[0], "y": mean_orientation[1], "z": mean_orientation[2], "w": mean_orientation[3]}
+        return dict(zip("xyzw", mean_orientation))
 
 
 class ArucoTrackPosition:
-    def __init__(self, solutions: list[dict]) -> None:
+    def __init__(self, solutions: list[dict], marker_id: int) -> None:
         self.orientation_tracks = []
+        self.marker_id = marker_id
+        self.best_orientation = None
         for solution_index, solution in enumerate(solutions):
             self.orientation_tracks.append(ArucoTrackOrientation(solution))
 
     def update(self, solutions: Optional[list[dict]] = None) -> bool:
         if solutions is None:
-            empty_track = self.orientation_tracks[0].update(None)
-            if empty_track:
+            non_empty_track = self.orientation_tracks[0].update(None)
+            if not non_empty_track:
                 return False
 
             self.orientation_tracks[1].update(None)
@@ -136,8 +157,29 @@ class ArucoTrackPosition:
                     orientation_track.last_orientation, solution["orientation"]
                 )
 
+        a = numpy.array([angles[0, 0], angles[1, 1]])
+        b = numpy.array([angles[0, 1], angles[1, 0]])
+
+        if sum(a) < sum(b):
+            min_pair = [0, 0]
+        else:
+            min_pair = [0, 1]
+
+        angle = math.degrees(
+            angle_between_quaternions(
+                self.orientation_tracks[0].last_orientation, self.orientation_tracks[1].last_orientation
+            )
+        )
+        print(
+            f"s0e={solutions[0]['reprojection_error']:5.3f} s1e={solutions[1]['reprojection_error']:5.3f} "
+            f"angle={angle:5.3f} max_a={math.degrees(max(a)):5.2f} max_b={math.degrees(max(b)):5.2f} "
+            f"sum_a={math.degrees(sum(a)):5.2f} sum_b={math.degrees(sum(b)):5.2f} "
+            f"angles=[{math.degrees(angles[0,0]):5.2f}, {math.degrees(angles[0,1]):5.2f}, {math.degrees(angles[1,0]):5.2f}, {math.degrees(angles[1,1]):5.2f}]"
+            f"min_pair = {min_pair}"
+        )
+
         # Get the best matching pair.
-        min_pair = numpy.unravel_index(numpy.argmin(angles), angles.shape)
+        # min_pair = numpy.unravel_index(numpy.argmin(angles), angles.shape)
         # Update the best matching pair.
         self.orientation_tracks[min_pair[0]].update(solutions[min_pair[1]])
         # Update the remaining pair.
@@ -149,19 +191,22 @@ class ArucoTrackPosition:
         return self.orientation_tracks[0].get_sample_number()
 
     def get_best_orientation_track(self) -> Optional[dict]:
+        reprojection_errors = numpy.array([track.get_reprojection_error() for track in self.orientation_tracks])
+        self.best_orientation = reprojection_errors.argmin()
+
         sample_number = self.get_sample_number()
         if sample_number < 3:
             return None
 
-        reprojection_errors = numpy.array([track.get_reprojection_error() for track in self.orientation_tracks])
-        best_orientation = reprojection_errors.argmin()
-
         return {
-            "position": self.orientation_tracks[best_orientation].get_mean_position(),
-            "orientation": self.orientation_tracks[best_orientation].get_mean_orientation(),
+            "position": self.orientation_tracks[self.best_orientation].get_mean_position(),
+            "orientation": self.orientation_tracks[self.best_orientation].get_mean_orientation(),
             "sample_number": sample_number,
-            "track_id": self.orientation_tracks[best_orientation].track_id,
+            "track_id": self.orientation_tracks[self.best_orientation].track_id,
         }
+
+    def status(self) -> str:
+        return f"{self.orientation_tracks[self.best_orientation].track_id}:{self.get_sample_number()}"
 
 
 def distance_between_points(point_1: dict, point_2: dict) -> float:
@@ -183,16 +228,12 @@ def angle_between_quaternions(quaternion_1: dict, quaternion_2: dict) -> float:
 class ArucoTrackMarker:
     distance_threshold = 0.3 * 25
 
-    def __init__(self, marker_id: str) -> None:
+    def __init__(self, marker_id: int) -> None:
         self.marker_id = marker_id
         self.position_tracks = []
 
-    def update(self, marker_detections: list[dict]) -> list[dict]:
-        # print(self.marker_id)
+    def update(self, marker_detections: list[dict]) -> bool:
         track_to_detection_assignment = {}
-        if len(marker_detections) != 1:
-            print(f"{len(marker_detections)} dectections of {self.marker_id}.")
-
         min_number = min(len(marker_detections), len(self.position_tracks))
 
         if min_number:
@@ -208,16 +249,15 @@ class ArucoTrackMarker:
             for _ in range(min_number):
                 min_pair = numpy.unravel_index(numpy.argmin(distances), distances.shape)
                 distance = distances[min_pair]
-                # print(distance)
                 if distance > ArucoTrackMarker.distance_threshold:
-                    print(f"Distance exceeded for pair {min_pair}: {distance} > {ArucoTrackMarker.distance_threshold}")
+                    print(
+                        f"Distance exceeded {self.marker_id} for pair {min_pair}: {distance} > {ArucoTrackMarker.distance_threshold}"
+                    )
                     break
 
                 track_to_detection_assignment[min_pair[0]] = min_pair[1]
-                distances[min_pair[0] :] = numpy.inf
-                distances[: min_pair[1]] = numpy.inf
-
-        # print(track_to_detection_assignment)
+                distances[min_pair[0], :] = numpy.inf
+                distances[:, min_pair[1]] = numpy.inf
 
         # Update assigned pairs.
         tracks_to_delete = []
@@ -230,9 +270,6 @@ class ArucoTrackMarker:
                 if not position_track.update():
                     tracks_to_delete.append(position_track_index)
 
-        if tracks_to_delete:
-            print(f"Deleting tracks for marker {self.marker_id} {tracks_to_delete}.")
-
         self.position_tracks = [
             track for index, track in enumerate(self.position_tracks) if index not in tracks_to_delete
         ]
@@ -240,10 +277,9 @@ class ArucoTrackMarker:
         # New track for unassigned detections.
         for marker_detection_index, marker_detection in enumerate(marker_detections):
             if marker_detection_index not in track_to_detection_assignment.values():
-                print(f"New track for marker {self.marker_id}")
-                self.position_tracks.append(ArucoTrackPosition(marker_detection["solutions"]))
+                self.position_tracks.append(ArucoTrackPosition(marker_detection["solutions"], self.marker_id))
 
-        return self.get_best_tracks()
+        return len(self.position_tracks) > 0
 
     def get_best_tracks(self) -> Optional[list[dict]]:
         # Choose position track with the largest number of detections.
@@ -262,24 +298,49 @@ class ArucoTrackMarker:
         best_tracks.sort(key=lambda x: x["sample_number"], reverse=True)
         return best_tracks
 
+    def status(self) -> str:
+        position_tracks_status = [position_track.status() for position_track in self.position_tracks]
+        return f"{self.marker_id}=[" + "|".join(position_tracks_status) + "]"
+
 
 class ArucoTrackAll:
     def __init__(self) -> None:
         self.marker_tracks = {}
+        self.last_status = None
 
     def update(self, landmarks: dict) -> dict:
         # Add an empty marker track for previously untracked markers.
-        for landmark_id in landmarks:
-            if landmark_id not in self.marker_tracks:
-                self.marker_tracks[landmark_id] = ArucoTrackMarker(landmark_id)
+        for landmark in landmarks.values():
+            marker_id = landmark[0]["id"]
+            if marker_id not in self.marker_tracks:
+                self.marker_tracks[marker_id] = ArucoTrackMarker(marker_id)
+
+        tracks_to_delete = []
+        for marker_id, marker_track in self.marker_tracks.items():
+            non_empty_track = marker_track.update(landmarks.get(f"aruco_{marker_id}", []))
+            if not non_empty_track:
+                tracks_to_delete.append(marker_id)
+
+        for marker_id in tracks_to_delete:
+            del self.marker_tracks[marker_id]
 
         tracked_landmarks = {
-            marker_id: tracked_landmark
+            f"aruco_{marker_id}": tracked_landmark
             for marker_id, marker_track in self.marker_tracks.items()
-            if (tracked_landmark := marker_track.update(landmarks.get(marker_id, []))) is not None
+            if (tracked_landmark := marker_track.get_best_tracks()) is not None
         }
 
+        self.print_status()
+
         return tracked_landmarks
+
+    def print_status(self) -> None:
+        marker_tracks_status = [self.marker_tracks[marker_id].status() for marker_id in sorted(self.marker_tracks)]
+        status = "Aruco tracks: " + " ".join(marker_tracks_status)
+        status_differs, highlighted_status = get_highlighted_string_difference(self.last_status, status)
+        if status_differs:
+            print(highlighted_status)
+        self.last_status = status
 
 
 class ArucoTracking(BaseTracking):
@@ -294,7 +355,10 @@ class ArucoTracking(BaseTracking):
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         self.aruco_parameters = cv2.aruco.DetectorParameters()
         self.aruco_parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
-        self.aruco_parameters.cornerRefinementWinSize = 4
+        self.aruco_parameters.cornerRefinementWinSize = 11
+        self.aruco_parameters.relativeCornerRefinmentWinSize = 0.4  # 0.3
+        # self.aruco_parameters.cornerRefinementMaxIterations = 100  # 30
+        # self.aruco_parameters.cornerRefinementMinAccuracy = 0.01  # 0.1
         self.aruco_parameters.minDistanceToBorder = 2
         self.aruco_parameters.minMarkerPerimeterRate = 0.03
         self.aruco_parameters.maxMarkerPerimeterRate = 0.3
@@ -354,8 +418,6 @@ class ArucoTracking(BaseTracking):
         landmarks = defaultdict(list)
         if ids is not None:
             for marker_corners, marker_id in zip(corners, ids.flatten()):
-                # Estimate pose of the marker.
-
                 # Solutions are sorted by reprojection error of SOLVEPNP_IPPE_SQUARE in undistorted image coordinates.
                 # But the returned reprojection error is from solvePnPGeneric which is in distorted image coordinates.
                 # Therefore, it can happen that the given reprojection error is not sorted (see data/log/aruco.txt)
@@ -372,7 +434,7 @@ class ArucoTracking(BaseTracking):
 
                 solutions = [
                     {
-                        "marker_id": f"aruco_{marker_id}",
+                        "id": marker_id,
                         "position": dict(zip("xyz", translation.flatten())),
                         "orientation": dict(zip("xyzw", Rotation.from_rotvec(rotation.flatten()).as_quat())),
                         "reprojection_error": reprojection_error[0],
@@ -380,11 +442,8 @@ class ArucoTracking(BaseTracking):
                     for translation, rotation, reprojection_error in zip(translations, rotations, reprojection_errors)
                 ]
 
-                # if abs(reprojection_errors[0] - reprojection_errors[1]) < 0.2:
-                #    print(f"{marker_id}.\n   {solutions[0]}\n   {solutions[1]}")
-
                 # Store information as list of 3 + 4 values.
-                landmarks[solutions[0]["marker_id"]].append({**solutions[0], "solutions": solutions})
+                landmarks[f"aruco_{solutions[0]['id']}"].append({**solutions[0], "solutions": solutions})
 
                 # Draw the axis of the marker.
                 if self.visualize:

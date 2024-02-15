@@ -36,6 +36,7 @@ class AzureTrackingNode:
             frame_id=rospy.get_param("~frame_id"),
             body_max_distance=rospy.get_param("~body_max_distance"),
             aruco_with_tracking=rospy.get_param("~aruco_with_tracking"),
+            color_control_filename=rospy.get_param("~color_control_filename"),
         )
         self.landmarks_publisher = rospy.Publisher(
             f"/landmarks/{self.azure_tracking.frame_id}", std_msgs.msg.String, queue_size=1

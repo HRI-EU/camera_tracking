@@ -17,7 +17,7 @@
 import os
 from enum import Enum
 import ctypes
-from pykinect_azure.k4a import _k4atypes
+from pykinect_azure.k4a import _k4atypes, _k4a
 from pykinect_azure.k4abt import _k4abt, _k4abtTypes, Tracker, Frame, Body2d
 import cv2
 

@@ -17,17 +17,19 @@
 from __future__ import annotations
 
 from typing import Optional
+import ctypes
 import numpy
+import yaml
 import cv2
 from scipy.spatial.transform import Rotation
 
 from .base_tracking import BaseTracking, ThreadedTracker, BaseCamera
 from .camera_helper import camera_parameters_from_config
-from .pykinect_azure_fix import pykinect_azure as pykinect
+from .pykinect_azure_fix import pykinect_azure as pykinect, _k4a
 from .pykinect_azure_fix import K4ABT_JOINTS, get_custom_k4a_path, get_custom_k4abt_path
 
 
-def get_color_camera_calibration(device, depth_mode, color_resolution) -> dict:
+def get_color_camera_calibration(device: pykinect.Device, depth_mode: int, color_resolution: int) -> dict:
     calibration = device.get_calibration(depth_mode, color_resolution)
 
     config = {name: getattr(calibration.color_params, name) for name, _ in calibration.color_params._fields_}
@@ -49,6 +51,78 @@ def get_color_camera_calibration(device, depth_mode, color_resolution) -> dict:
     camera_parameters["transformation_matrix_depth_to_color"] = transformation_matrix_depth_to_color
 
     return camera_parameters
+
+
+# fmt: off
+capabilities = [
+    {"id": 0, "name": "EXPOSURE_TIME_ABSOLUTE", "supports_auto": True,
+     "min_value": 500,  "max_value": 133330, "step_value": 100, "default_value": 16670, "default_mode": 0},
+    { "id": 1, "name": "AUTO_EXPOSURE_PRIORITY", "supports_auto": False,
+      "min_value": 0, "max_value": 0, "step_value": 0, "default_value": 0, "default_mode": 1},
+    {"id": 2,  "name": "BRIGHTNESS", "supports_auto": False,
+     "min_value": 0, "max_value": 255, "step_value": 1, "default_value": 128,"default_mode": 1},
+    {"id": 3, "name": "CONTRAST", "supports_auto": False, "min_value": 0,
+     "max_value": 10, "step_value": 1, "default_value": 5, "default_mode": 1},
+    { "id": 4, "name": "SATURATION", "supports_auto": False,
+      "min_value": 0, "max_value": 63, "step_value": 1, "default_value": 32, "default_mode": 1},
+    {"id": 5, "name": "SHARPNESS", "supports_auto": False,
+     "min_value": 0, "max_value": 4, "step_value": 1, "default_value": 2, "default_mode": 1},
+    {"id": 6, "name": "WHITEBALANCE", "supports_auto": True,
+     "min_value": 2500, "max_value": 12500, "step_value": 10, "default_value": 4500, "default_mode": 0},
+    {"id": 7, "name": "BACKLIGHT_COMPENSATION", "supports_auto": False,
+     "min_value": 0, "max_value": 1, "step_value": 1, "default_value": 0, "default_mode": 1},
+    {"id": 8, "name": "GAIN", "supports_auto": False,
+     "min_value": 0, "max_value": 255, "step_value": 1, "default_value": 128, "default_mode": 1},
+    {"id": 9, "name": "POWERLINE_FREQUENCY", "supports_auto": False,
+     "min_value": 1, "max_value": 2, "step_value": 1, "default_value": 2, "default_mode": 1},
+]
+# fmt: on
+
+
+def set_color_control_commands(device: pykinect.Device, commands: list[dict], capabilities: dict) -> None:
+    for command in commands:
+        # Fill missing values with defaults.
+        mode = command.get("mode", capabilities[command["name"]]["default_mode"])
+        value = command.get("value", capabilities[command["name"]]["default_value"])
+        id_ = capabilities[command["name"]]["id"]
+        result = _k4a.k4a_device_set_color_control(device.handle(), id_, mode, value)
+        if result != 0:
+            raise AssertionError(
+                "Could not set color control with name: {command['name']} id: {id_} mode: {mode} value: {value]}."
+            )
+
+
+def get_color_control_capabilities(device: pykinect.Device, commands_mapping: dict) -> dict:
+    commands = {}
+    for command_name, command_id in commands_mapping.items():
+        supports_auto = ctypes.c_bool()
+        min_value = ctypes.c_int()
+        max_value = ctypes.c_int()
+        step_value = ctypes.c_int()
+        default_value = ctypes.c_int()
+        default_mode = ctypes.c_int()
+        _k4a.k4a_device_get_color_control_capabilities(
+            device.handle(),
+            command_id,
+            supports_auto,
+            min_value,
+            max_value,
+            step_value,
+            default_value,
+            default_mode,
+        )
+        commands[command_name] = {
+            "id": command_id,
+            "name": command_name,
+            "supports_auto": supports_auto.value,
+            "min_value": min_value.value,
+            "max_value": max_value.value,
+            "step_value": step_value.value,
+            "default_value": default_value.value,
+            "default_mode": default_mode.value,
+        }
+
+    return commands
 
 
 class BodyTracking(BaseTracking):
@@ -185,6 +259,19 @@ class AzureTracking(BaseCamera):
         "30": pykinect.K4A_FRAMES_PER_SECOND_30,
     }
 
+    color_commands_mapping = {
+        "EXPOSURE_TIME_ABSOLUTE": pykinect.K4A_COLOR_CONTROL_EXPOSURE_TIME_ABSOLUTE,
+        "AUTO_EXPOSURE_PRIORITY": pykinect.K4A_COLOR_CONTROL_AUTO_EXPOSURE_PRIORITY,
+        "BRIGHTNESS": pykinect.K4A_COLOR_CONTROL_BRIGHTNESS,
+        "CONTRAST": pykinect.K4A_COLOR_CONTROL_CONTRAST,
+        "SATURATION": pykinect.K4A_COLOR_CONTROL_SATURATION,
+        "SHARPNESS": pykinect.K4A_COLOR_CONTROL_SHARPNESS,
+        "WHITEBALANCE": pykinect.K4A_COLOR_CONTROL_WHITEBALANCE,
+        "BACKLIGHT_COMPENSATION": pykinect.K4A_COLOR_CONTROL_BACKLIGHT_COMPENSATION,
+        "GAIN": pykinect.K4A_COLOR_CONTROL_GAIN,
+        "POWERLINE_FREQUENCY": pykinect.K4A_COLOR_CONTROL_POWERLINE_FREQUENCY,
+    }
+
     def __init__(
         self,
         with_aruco: bool = True,
@@ -197,6 +284,7 @@ class AzureTracking(BaseCamera):
         frame_id: str = "",
         body_max_distance: float = 0.0,
         aruco_with_tracking: bool = False,
+        color_control_filename: Optional[str] = None,
     ):
         super().__init__(frame_id=frame_id)
 
@@ -239,17 +327,28 @@ class AzureTracking(BaseCamera):
         self.device = pykinect.start_device(config=device_config)
 
         # Get the resolution specific calibration parameters of the color camera.
-        color_camera_parameters = get_color_camera_calibration(
+        color_camera_calibration = get_color_camera_calibration(
             self.device, device_config.depth_mode, device_config.color_resolution
         )
+
+        # Get control capabilities of the color camera and set those back to defaults.
+        color_camera_control_capabilities = get_color_control_capabilities(self.device, self.color_commands_mapping)
+        color_camera_control_defaults = [{"name": name} for name in color_camera_control_capabilities]
+        set_color_control_commands(self.device, color_camera_control_defaults, color_camera_control_capabilities)
+        if color_control_filename:
+            with open(color_control_filename, encoding="utf-8") as file:
+                color_control_commands = yaml.load(file, Loader=yaml.SafeLoader)
+
+            print(f"Setting color control {color_control_commands}.")
+            set_color_control_commands(self.device, color_control_commands, color_camera_control_capabilities)
 
         # We add trackers in order of expected processing time (decreasingly).
         if with_aruco:
             from .aruco_tracking import ArucoTracking
 
             aruco_tracking = ArucoTracking(
-                color_camera_parameters["camera_matrix"],
-                color_camera_parameters["distortion_coefficients"],
+                color_camera_calibration["camera_matrix"],
+                color_camera_calibration["distortion_coefficients"],
                 visualize=visualize,
                 with_tracking=aruco_with_tracking,
             )
@@ -269,7 +368,7 @@ class AzureTracking(BaseCamera):
             body_tracking = BodyTracking(
                 visualize=visualize,
                 body_max_distance=body_max_distance,
-                transformation_matrix=color_camera_parameters["transformation_matrix_depth_to_color"],
+                transformation_matrix=color_camera_calibration["transformation_matrix_depth_to_color"],
             )
             self.trackers["body"] = ThreadedTracker(body_tracking, input_function=lambda capture: (True, capture))
 
