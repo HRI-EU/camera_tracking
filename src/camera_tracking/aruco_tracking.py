@@ -434,7 +434,7 @@ class ArucoTracking(BaseTracking):
 
                 solutions = [
                     {
-                        "id": marker_id,
+                        "id": int(marker_id),
                         "position": dict(zip("xyz", translation.flatten())),
                         "orientation": dict(zip("xyzw", Rotation.from_rotvec(rotation.flatten()).as_quat())),
                         "reprojection_error": reprojection_error[0],
