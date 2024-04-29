@@ -94,7 +94,7 @@ class BaseCamera:
     def get_capture(self):
         raise NotImplementedError("This method must be implemented in the child class.")
 
-    def step(self, process=True) -> dict:
+    def step(self, process: bool = True) -> dict:
         start_time = time.time()
 
         # Get capture.
@@ -114,10 +114,6 @@ class BaseCamera:
                 tracker.trigger(capture)
 
             # Wait for tracker results in reversed order (increasing processing time)
-            landmarks = {
-                "header": {"timestamp": capture_time, "frame_id": self.frame_id, "seq": self.step_count},
-                "data": {},
-            }
             for tracker in reversed(self.trackers.values()):
                 landmarks["data"][tracker.tracker.name] = tracker.output.get()
                 tracker.tracker.show_visualization()
