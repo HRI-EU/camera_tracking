@@ -87,6 +87,9 @@ class TrackingNode:
             camera_matrix = camera_model.intrinsicMatrix()
             distortion_coefficients = camera_model.distortionCoeffs()
 
+        rospy.loginfo(f"Camera_matrix:\n{camera_matrix}")
+        rospy.loginfo(f"Distortion_coefficients:\n{distortion_coefficients}")
+
         self.tracking = Tracking(
             with_aruco=rospy.get_param("~with_aruco"),
             with_mediapipe=rospy.get_param("~with_mediapipe"),
