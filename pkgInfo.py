@@ -29,7 +29,7 @@ sqComments = {
     "C10": "BST.py is not compatible with ROS.",
     "BASH07": "Failing due to external BashSrc.",
     "PY02": "We need to access some internals of the underlying 3rd party planner.",
-    "PY05": "We execute pylint ourselves for sonarqube.",
+    "PY05": "We execute pylint ourselves.",
 }
 
 scripts = {"unittest": "ci-unit-tests.sh"}
