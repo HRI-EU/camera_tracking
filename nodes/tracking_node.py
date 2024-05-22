@@ -13,9 +13,10 @@
 #  ALL RIGHTS RESERVED.
 #
 #
-import queue
+
 from typing import Optional
 
+import queue
 import logging
 import json
 import numpy
