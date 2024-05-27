@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  Script for replacing aruco markers inside aruco_11_to_22_4cm.svg.
+#  Script for replacing aruco marker inside aruco_0_14cm.svg.
 #
 #  Copyright (C)
 #  Honda Research Institute Europe GmbH
@@ -13,14 +13,14 @@
 #
 #
 
-want_marker_ids=(15 16 18 19 20 25 26 28 29 39 45 46)
+want_marker_ids=(1)
 
-if [[ ${#want_marker_ids[@]} != 12 ]]; then
-    echo "You must provide 12 marker IDs."
+if [[ ${#want_marker_ids[@]} != 1 ]]; then
+    echo "You must provide 1 marker ID."
     exit 1
 fi
 
-have_marker_ids=(11 12 13 14 15 16 17 18 19 20 21 22)
+have_marker_ids=(0)
 
 # The dummy is used to prevent multiple sequential replacements of a pattern. It is later removed again.
 dummy="alreadydone"
@@ -28,7 +28,7 @@ dummy="alreadydone"
 replacement=""
 filename=""
 
-for (( i=0; i<12; i++ )); do
+for (( i=0; i<1; i++ )); do
     have_id=${have_marker_ids[i]}
     want_id=${want_marker_ids[i]}
     replacement+="s:marker\_${have_id}:marker_${dummy}${want_id}:g;"
@@ -36,7 +36,7 @@ for (( i=0; i<12; i++ )); do
     filename+="_${want_id}"
 done
 
-fullname=aruco"${filename}"_4cm.svg
+fullname=aruco_14cm"${filename}".svg
 
-sed "${replacement}" aruco_11_to_22_4cm.svg > "${fullname}"
+sed "${replacement}" aruco_14cm_0.svg > "${fullname}"
 sed -i "s:${dummy}::g" "${fullname}"
