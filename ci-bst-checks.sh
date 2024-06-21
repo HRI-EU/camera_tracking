@@ -13,7 +13,9 @@
 #
 #
 
+set -eo pipefail
+
 # shellcheck source=/dev/null
-source /hri/sit/latest/DevelopmentTools/ToolBOSCore/4.2.5/BashSrc
-source /hri/sit/latest/External/anaconda3/envs/common/3.10/BashSrc
+source /hri/sit/latest/DevelopmentTools/ToolBOSCore/4.3.2/BashSrc
+source /hri/sit/latest/External/anaconda/envs/common/3.11/BashSrc
 BST.py -q

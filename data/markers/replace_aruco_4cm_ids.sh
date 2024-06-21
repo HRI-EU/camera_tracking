@@ -13,6 +13,8 @@
 #
 #
 
+set -euo pipefail
+
 want_marker_ids=(10 11 12 14 15 16 18 19 20 21 22 23)
 
 if [[ ${#want_marker_ids[@]} != 12 ]]; then

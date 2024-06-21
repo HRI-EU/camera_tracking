@@ -13,6 +13,8 @@
 #
 #
 
+set -euo pipefail
+
 want_marker_ids=(1)
 
 if [[ ${#want_marker_ids[@]} != 1 ]]; then

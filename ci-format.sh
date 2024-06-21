@@ -13,13 +13,15 @@
 #
 #
 
+set -euo pipefail
+
 BLACK_ADDITIONAL_ARG="--check"
-if [ "$1" == "--apply" ]; then
+
+if [ "${1:-}" == "--apply" ]; then
     printf "*** Applying format inplace ***\n\n"
-    BLACK_ADDITIONAL_ARG=""
+    BLACK_ADDITIONAL_ARG=
 else
     printf "*** For applying format inplace start with './ci-format.sh --apply' ***\n\n"
 fi
 
-# shellcheck disable=SC2086,SC2248
-black . --required-version "23.9.1" ${BLACK_ADDITIONAL_ARG}
+black . --required-version "24.4.2" ${BLACK_ADDITIONAL_ARG:+"${BLACK_ADDITIONAL_ARG}"}

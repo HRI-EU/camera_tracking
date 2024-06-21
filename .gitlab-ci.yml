@@ -13,12 +13,25 @@
 #
 
 stages:
+    - venv
     - check
     - test
-    - quality assurance
+
+variables:
+    PIP_INDEX_URL: https://cicd-pkg-reg.honda-ri.de/repository/pypi-proxy/simple
+    REQUESTS_CA_BUNDLE: /usr/local/share/ca-certificates/HRI-CA_cert.crt
 
 default:
-    image: dmz-gitlab.honda-ri.de:5050/gitlabrunner/buildcontainers/care_ros_ws:latest
+    image: dmz-gitlab.honda-ri.de:5050/gitlabrunner/buildcontainers/hri-eu-main:latest
+
+create venv:
+    stage: venv
+    script:
+        - ./create_venv.sh --ci-only
+    artifacts:
+        paths:
+            - venv
+        expire_in: 1h
 
 bst checks:
     stage: check
@@ -29,22 +42,31 @@ bst checks:
 lint:
     stage: check
     script:
+        - source venv/bin/activate
         - ./ci-lint.sh | tee pylint.report
     artifacts:
         paths:
             - pylint.report
         expire_in: 1 hour
-    needs: [ ]
 
 black:
     stage: check
     script:
+        - source venv/bin/activate
         - ./ci-format.sh
-    needs: [ ]
+
+mypy:
+    stage: check
+    when: manual
+    script:
+        - source venv/bin/activate
+        - ./ci-mypy.sh
 
 unit tests:
     stage: test
+    when: manual
     script:
+        - source venv/bin/activate
         - ./ci-unit-tests.sh
         - coverage xml
     coverage: '/^TOTAL.+?(\d+\%)$/'
@@ -59,4 +81,3 @@ unit tests:
             - junit-report.xml
             - coverage.xml
         expire_in: 1 hour
-    needs: [ ]

@@ -13,6 +13,8 @@
 #
 #
 
+set -euo pipefail
+
 if [[ ! -f requirements.txt ]]; then
     echo "requirements.txt not found. Aborting."
     exit 1

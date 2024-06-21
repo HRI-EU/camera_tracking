@@ -13,6 +13,8 @@
 #
 #
 
+set -euo pipefail
+
 python -m pytest \
     -v \
     --cov-branch \

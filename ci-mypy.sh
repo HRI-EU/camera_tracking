@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  Perform "lint" continuous integration pipeline job using pylint.
+#  Perform static type checking continuous integration pipeline job using mypy.
 #
 #  Copyright (C)
 #  Honda Research Institute Europe GmbH
@@ -15,8 +15,7 @@
 
 set -euo pipefail
 
-pylint --version
-pylint --recursive y \
-       -f parseable \
-       -v \
-       --exit-zero .
+source local.env
+export MYPYPATH=${PYTHONPATH}
+
+mypy ./nodes ./src ./scripts
