@@ -1,0 +1,13 @@
+<launch>
+    <arg name="frame_id"/>
+    <arg name="body_topic"/>
+
+    <!-- Buffer for tf with action interface -->
+    <node name="buffer_server" pkg="tf2_ros" type="buffer_server" output="screen" respawn="false"/>
+
+    <node name="body_to_landmark" pkg="camera_tracking" type="body_to_landmark_node.py" output="screen" respawn="false">
+        <param name="frame_id" type="str" value="$(arg frame_id)"/>
+        <param name="body_topic" type="str" value="$(arg body_topic)"/>
+    </node>
+
+</launch>

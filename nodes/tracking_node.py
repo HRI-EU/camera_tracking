@@ -19,6 +19,8 @@ from typing import Optional
 import queue
 import logging
 import json
+
+import geometry_msgs.msg
 import numpy
 
 import rospy
@@ -116,7 +118,7 @@ class TrackingNode:
     def stop(self):
         self.tracking.stop()
 
-    def image_callback(self, image_msg):
+    def image_callback(self, image_msg: sensor_msgs.msg.Image) -> None:
         # Convert msgs to cv2.
         try:
             cv_image = self.cv_bridge.imgmsg_to_cv2(image_msg, "bgr8")

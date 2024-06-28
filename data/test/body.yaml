@@ -1,0 +1,3747 @@
+markers:
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 100
+    type: 2
+    action: 0
+    pose: 
+      position:
+        x: 0.7584748268127441
+        y: 0.11200392246246338
+        z: 1.365275502204895
+      orientation:
+        x: -0.6164748668670654
+        y: 0.7000720500946045
+        z: 0.12289062142372131
+        w: 0.33875614404678345
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 101
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7590824961662292
+        y: -0.0207211971282959
+        z: 1.2598074674606323
+      orientation:
+        x: -0.6073196530342102
+        y: 0.7080289721488953
+        z: 0.1272851824760437
+        w: 0.3371295630931854
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 102
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7543429732322693
+        y: -0.1256464719772339
+        z: 1.1741540431976318
+      orientation:
+        x: -0.6090313196182251
+        y: 0.7090514898300171
+        z: 0.15736123919487
+        w: 0.31869134306907654
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 103
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.743851363658905
+        y: -0.28331637382507324
+        z: 1.041524052619934
+      orientation:
+        x: -0.5502087473869324
+        y: 0.755608081817627
+        z: 0.1824113428592682
+        w: 0.3050456941127777
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 104
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7548664808273315
+        y: -0.23810741305351257
+        z: 1.03948974609375
+      orientation:
+        x: -0.204044371843338
+        y: 0.1935531347990036
+        z: 0.5437483191490173
+        w: 0.7907217144966125
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 105
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.8002027869224548
+        y: -0.13202786445617676
+        z: 0.9677678942680359
+      orientation:
+        x: 0.30330806970596313
+        y: -0.04332258924841881
+        z: 0.629654049873352
+        w: 0.7139069437980652
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 106
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.8535922765731812
+        y: 0.09714864194393158
+        z: 1.0843099355697632
+      orientation:
+        x: 0.2249167412519455
+        y: -0.2080506831407547
+        z: 0.9238408207893372
+        w: 0.22944602370262146
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 107
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.6787010431289673
+        y: 0.16995733976364136
+        z: 1.1969424486160278
+      orientation:
+        x: -0.003564157523214817
+        y: 0.7780380845069885
+        z: -0.6261749863624573
+        w: -0.05048650503158569
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 108
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.5872405767440796
+        y: 0.17265471816062927
+        z: 1.1964857578277588
+      orientation:
+        x: 0.13216079771518707
+        y: 0.766739547252655
+        z: -0.6253851652145386
+        w: 0.05947621166706085
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 109
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.48887622356414795
+        y: 0.1858256310224533
+        z: 1.1701481342315674
+      orientation:
+        x: 0.13216079771518707
+        y: 0.766739547252655
+        z: -0.6253851652145386
+        w: 0.05947621166706085
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 110
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.5475385785102844
+        y: 0.15004129707813263
+        z: 1.2066943645477295
+      orientation:
+        x: -0.008234789595007896
+        y: -0.2229524403810501
+        z: 0.9709545373916626
+        w: 0.08643894642591476
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 111
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7382541298866272
+        y: -0.27676668763160706
+        z: 1.087644100189209
+      orientation:
+        x: 0.6996619701385498
+        y: 0.49525800347328186
+        z: -0.3925843834877014
+        w: 0.3332718014717102
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 112
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7131116390228271
+        y: -0.3306712508201599
+        z: 1.1975476741790771
+      orientation:
+        x: -0.5322717428207397
+        y: -0.1193636953830719
+        z: 0.7134400010108948
+        w: -0.4398210048675537
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 113
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.72555011510849
+        y: -0.19675664603710175
+        z: 1.4288488626480103
+      orientation:
+        x: 0.5032452940940857
+        y: -0.21048760414123535
+        z: -0.3276093602180481
+        w: 0.7714345455169678
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 114
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.5700493454933167
+        y: -0.03666311502456665
+        z: 1.4299604892730713
+      orientation:
+        x: 0.4793912172317505
+        y: -0.27222272753715515
+        z: -0.02096991054713726
+        w: 0.8340498208999634
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 115
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.4904309809207916
+        y: -0.0072308070957660675
+        z: 1.3799490928649902
+      orientation:
+        x: 0.4997750520706177
+        y: -0.23269307613372803
+        z: -0.08813447505235672
+        w: 0.8296452164649963
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 116
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.40200304985046387
+        y: 0.031002584844827652
+        z: 1.3498722314834595
+      orientation:
+        x: 0.4997750520706177
+        y: -0.23269307613372803
+        z: -0.08813447505235672
+        w: 0.8296452164649963
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 117
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.47585031390190125
+        y: 0.04754311591386795
+        z: 1.398902177810669
+      orientation:
+        x: 0.9375183582305908
+        y: -0.1685882806777954
+        z: 0.06313487142324448
+        w: 0.29774361848831177
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 118
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7864428162574768
+        y: 0.16310125589370728
+        z: 1.3011337518692017
+      orientation:
+        x: 0.7179060578346252
+        y: -0.5880857706069946
+        z: 0.028172090649604797
+        w: -0.37144631147384644
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 119
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.6697609424591064
+        y: 0.4922775626182556
+        z: 1.451943278312683
+      orientation:
+        x: -0.4153593182563782
+        y: 0.8298693299293518
+        z: 0.12594977021217346
+        w: 0.3506140410900116
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 120
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.8184903860092163
+        y: 0.7108013033866882
+        z: 1.7015470266342163
+      orientation:
+        x: -0.43037891387939453
+        y: 0.8247092962265015
+        z: 0.14771221578121185
+        w: 0.33587154746055603
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 121
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7471573948860168
+        y: 0.8596524000167847
+        z: 1.7682183980941772
+      orientation:
+        x: 0.2778642773628235
+        y: 0.887627363204956
+        z: 0.33990970253944397
+        w: 0.13917773962020874
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 122
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7332548499107361
+        y: 0.06592721492052078
+        z: 1.4231148958206177
+      orientation:
+        x: 0.5515165328979492
+        y: 0.7610120177268982
+        z: 0.3336896598339081
+        w: -0.07308530062437057
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 123
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.5884819626808167
+        y: 0.366376668214798
+        z: 1.6052544116973877
+      orientation:
+        x: 0.8149037957191467
+        y: 0.46829095482826233
+        z: 0.27444717288017273
+        w: -0.20325887203216553
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 124
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7393900752067566
+        y: 0.6057843565940857
+        z: 1.839521884918213
+      orientation:
+        x: 0.8121480941772461
+        y: 0.4728195369243622
+        z: 0.2682628035545349
+        w: -0.2118777632713318
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 125
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.6635344624519348
+        y: 0.7303363084793091
+        z: 1.9140758514404297
+      orientation:
+        x: 0.9097874164581299
+        y: -0.23424924910068512
+        z: 0.03592369705438614
+        w: -0.34076935052871704
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 126
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7276721596717834
+        y: -0.3392196595668793
+        z: 0.9901599884033203
+      orientation:
+        x: -0.6179751753807068
+        y: 0.6652371287345886
+        z: 0.2158394753932953
+        w: 0.3591372072696686
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 127
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.5864443182945251
+        y: -0.3547345697879791
+        z: 0.9342206716537476
+      orientation:
+        x: -0.6179751753807068
+        y: 0.6652371287345886
+        z: 0.2158394753932953
+        w: 0.3591372072696686
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 128
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.6268664002418518
+        y: -0.3634001612663269
+        z: 0.9007569551467896
+      orientation:
+        x: 0.033419184386730194
+        y: 0.9073681235313416
+        z: 0.4065699279308319
+        w: 0.10132680088281631
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 129
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7407938241958618
+        y: -0.32514688372612
+        z: 0.8924651741981506
+      orientation:
+        x: 0.6652371287345886
+        y: 0.6179751753807068
+        z: 0.3591372072696686
+        w: -0.2158394753932953
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 130
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.6132994294166565
+        y: -0.3958839178085327
+        z: 0.9358147978782654
+      orientation:
+        x: 0.033419184386730194
+        y: 0.9073681235313416
+        z: 0.4065699279308319
+        w: 0.10132680088281631
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 131
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.7121133804321289
+        y: -0.4379875659942627
+        z: 0.9987727403640747
+      orientation:
+        x: -0.6179751753807068
+        y: 0.6652371287345886
+        z: 0.2158394753932953
+        w: 0.3591372072696686
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 1.0
+      b: 0.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 200
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2551250755786896
+        y: -0.24796989560127258
+        z: 1.822651982307434
+      orientation:
+        x: -0.15868593752384186
+        y: 0.60358065366745
+        z: -0.4406373202800751
+        w: 0.6452502608299255
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 201
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2761143743991852
+        y: -0.3796283006668091
+        z: 1.7150322198867798
+      orientation:
+        x: -0.14205998182296753
+        y: 0.6077085733413696
+        z: -0.4227614402770996
+        w: 0.6571011543273926
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 202
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2892765700817108
+        y: -0.4793855547904968
+        z: 1.6220933198928833
+      orientation:
+        x: -0.08203748613595963
+        y: 0.6142222285270691
+        z: -0.36905407905578613
+        w: 0.6926760077476501
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 203
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.29526442289352417
+        y: -0.6076439023017883
+        z: 1.4578139781951904
+      orientation:
+        x: -0.032516784965991974
+        y: 0.6188228726387024
+        z: -0.31231749057769775
+        w: 0.7200407981872559
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 204
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2651953101158142
+        y: -0.5983399748802185
+        z: 1.4928160905838013
+      orientation:
+        x: -0.30067580938339233
+        y: -0.1750250905752182
+        z: -0.10926899313926697
+        w: 0.9311394095420837
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 205
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.13959632813930511
+        y: -0.6118269562721252
+        z: 1.5465859174728394
+      orientation:
+        x: -0.24040047824382782
+        y: -0.5695823431015015
+        z: 0.1921020895242691
+        w: 0.7621551156044006
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 206
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.06599049270153046
+        y: -0.46143391728401184
+        z: 1.7524936199188232
+      orientation:
+        x: -0.4716393053531647
+        y: -0.3997158706188202
+        z: 0.5154763460159302
+        w: 0.5933530330657959
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 207
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.032796066254377365
+        y: -0.24118977785110474
+        z: 1.7498446702957153
+      orientation:
+        x: 0.8492921590805054
+        y: 0.5242421627044678
+        z: -0.04581019654870033
+        w: -0.04212392494082451
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 208
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.014318950474262238
+        y: -0.16204148530960083
+        z: 1.7416061162948608
+      orientation:
+        x: 0.6795864701271057
+        y: 0.7309509515762329
+        z: -0.03297938033938408
+        w: -0.05277649685740471
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 209
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.006976586300879717
+        y: -0.0585826113820076
+        z: 1.7449610233306885
+      orientation:
+        x: 0.6795864701271057
+        y: 0.7309509515762329
+        z: -0.03297938033938408
+        w: -0.05277649685740471
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 210
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.0543152391910553
+        y: -0.1360444724559784
+        z: 1.800856590270996
+      orientation:
+        x: 0.016885779798030853
+        y: -0.5805633664131165
+        z: 0.4502158761024475
+        w: 0.6782084703445435
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 211
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.324085533618927
+        y: -0.5760335922241211
+        z: 1.4782748222351074
+      orientation:
+        x: 0.9205737709999084
+        y: -0.3047659993171692
+        z: -0.042142681777477264
+        w: 0.2405940592288971
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 212
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.426474928855896
+        y: -0.5026029944419861
+        z: 1.4695526361465454
+      orientation:
+        x: 0.764538586139679
+        y: -0.5034903883934021
+        z: -0.4023750424385071
+        w: -0.008517401292920113
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 213
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.4722246527671814
+        y: -0.29627081751823425
+        z: 1.6382479667663574
+      orientation:
+        x: -0.47696220874786377
+        y: 0.7813634872436523
+        z: 0.3676147162914276
+        w: -0.16382192075252533
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 214
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.3613947927951813
+        y: -0.10097303986549377
+        z: 1.6596019268035889
+      orientation:
+        x: 0.07229547947645187
+        y: -0.5412052273750305
+        z: -0.6534841060638428
+        w: 0.5242412090301514
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 215
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.3184727430343628
+        y: -0.02937709540128708
+        z: 1.605320692062378
+      orientation:
+        x: -0.032667700201272964
+        y: -0.5450344085693359
+        z: -0.5410159230232239
+        w: 0.6396656036376953
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 216
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.30016112327575684
+        y: 0.037590280175209045
+        z: 1.5305911302566528
+      orientation:
+        x: -0.032667700201272964
+        y: -0.5450344085693359
+        z: -0.5410159230232239
+        w: 0.6396656036376953
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 217
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.3105604350566864
+        y: -0.0035370811820030212
+        z: 1.6685210466384888
+      orientation:
+        x: 0.737098753452301
+        y: -0.6176074147224426
+        z: -0.2481391727924347
+        w: 0.11693373322486877
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 218
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.1746692806482315
+        y: -0.2766169607639313
+        z: 1.8420064449310303
+      orientation:
+        x: 0.31022536754608154
+        y: -0.49029117822647095
+        z: 0.696037232875824
+        w: -0.4229739308357239
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 219
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.0017688274383544922
+        y: 0.0667232871055603
+        z: 1.8354334831237793
+      orientation:
+        x: 0.01428199652582407
+        y: 0.5800171494483948
+        z: -0.34385156631469727
+        w: 0.7383374571800232
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 220
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.03509265556931496
+        y: 0.24720512330532074
+        z: 2.153752326965332
+      orientation:
+        x: -0.00941088143736124
+        y: 0.5777274966239929
+        z: -0.382599800825119
+        w: 0.7209436297416687
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 221
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.038262154906988144
+        y: 0.40966421365737915
+        z: 2.1781697273254395
+      orientation:
+        x: 0.4018629789352417
+        y: 0.4120646119117737
+        z: 0.23440955579280853
+        w: 0.7834290266036987
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 222
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.32767561078071594
+        y: -0.22213757038116455
+        z: 1.8051992654800415
+      orientation:
+        x: 0.525806725025177
+        y: 0.40957632660865784
+        z: 0.47720101475715637
+        w: 0.572759747505188
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 223
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.24738670885562897
+        y: 0.15322715044021606
+        z: 1.8177400827407837
+      orientation:
+        x: 0.6620351076126099
+        y: 0.07704371958971024
+        z: 0.7051615715026855
+        w: 0.24191096425056458
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 224
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.24975460767745972
+        y: 0.317782998085022
+        z: 2.1505796909332275
+      orientation:
+        x: 0.6571637988090515
+        y: 0.11704903841018677
+        z: 0.6898013353347778
+        w: 0.2803736925125122
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 225
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2172805666923523
+        y: 0.47959208488464355
+        z: 2.163400650024414
+      orientation:
+        x: 0.5530077219009399
+        y: -0.37796899676322937
+        z: 0.6839736700057983
+        w: -0.28896698355674744
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 226
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.29220232367515564
+        y: -0.6460852026939392
+        z: 1.3894957304000854
+      orientation:
+        x: -0.30373531579971313
+        y: 0.65849369764328
+        z: -0.3210175335407257
+        w: 0.6091622710227966
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 227
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.30202117562294006
+        y: -0.5959182977676392
+        z: 1.2438855171203613
+      orientation:
+        x: -0.30373531579971313
+        y: 0.65849369764328
+        z: -0.3210175335407257
+        w: 0.6091622710227966
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 228
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.27994275093078613
+        y: -0.6443027257919312
+        z: 1.2516988515853882
+      orientation:
+        x: 0.2508520483970642
+        y: 0.6803986430168152
+        z: 0.20374909043312073
+        w: 0.6577364802360535
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 229
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.21990656852722168
+        y: -0.6982712745666504
+        z: 1.342835783958435
+      orientation:
+        x: 0.65849369764328
+        y: 0.30373528599739075
+        z: 0.6091622710227966
+        w: 0.3210175633430481
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 230
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.32936930656433105
+        y: -0.6359729766845703
+        z: 1.2546824216842651
+      orientation:
+        x: 0.2508520483970642
+        y: 0.6803986430168152
+        z: 0.20374909043312073
+        w: 0.6577364802360535
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 825464999
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 231
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.37830060720443726
+        y: -0.6892216205596924
+        z: 1.3576557636260986
+      orientation:
+        x: -0.30373531579971313
+        y: 0.65849369764328
+        z: -0.3210175335407257
+        w: 0.6091622710227966
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+---
+markers:
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 200
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.25973671674728394
+        y: -0.2533308267593384
+        z: 1.8231675624847412
+      orientation:
+        x: -0.1580258309841156
+        y: 0.6035520434379578
+        z: -0.4317118525505066
+        w: 0.6514426469802856
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 201
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.278278648853302
+        y: -0.3855879604816437
+        z: 1.7121946811676025
+      orientation:
+        x: -0.13447663187980652
+        y: 0.60923171043396
+        z: -0.40609732270240784
+        w: 0.6677107810974121
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 202
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.288297563791275
+        y: -0.4836193919181824
+        z: 1.614422082901001
+      orientation:
+        x: -0.07869880646467209
+        y: 0.6219766139984131
+        z: -0.35535168647766113
+        w: 0.6933084726333618
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 203
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2942078709602356
+        y: -0.6090955138206482
+        z: 1.4445080757141113
+      orientation:
+        x: -0.028566990047693253
+        y: 0.626284658908844
+        z: -0.29860854148864746
+        w: 0.7195723652839661
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 204
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.26351800560951233
+        y: -0.6002033948898315
+        z: 1.4799323081970215
+      orientation:
+        x: -0.28348949551582336
+        y: -0.17652928829193115
+        z: -0.12332439422607422
+        w: 0.9344850182533264
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 205
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.1372881680727005
+        y: -0.6183465719223022
+        z: 1.53556489944458
+      orientation:
+        x: -0.24959345161914825
+        y: -0.5805244445800781
+        z: 0.18468089401721954
+        w: 0.752720057964325
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 206
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.06795869022607803
+        y: -0.4656267762184143
+        z: 1.7458255290985107
+      orientation:
+        x: -0.4822935461997986
+        y: -0.4082873463630676
+        z: 0.5009872317314148
+        w: 0.5913597345352173
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 207
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.030795786529779434
+        y: -0.2429664134979248
+        z: 1.745745062828064
+      orientation:
+        x: 0.7434549331665039
+        y: 0.5025671124458313
+        z: 0.23423263430595398
+        w: 0.3739466369152069
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 208
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.012578822672367096
+        y: -0.1598900854587555
+        z: 1.746448278427124
+      orientation:
+        x: 0.6320468187332153
+        y: 0.6370368003845215
+        z: 0.15737560391426086
+        w: 0.41223040223121643
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 209
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.027179699391126633
+        y: -0.06155570596456528
+        z: 1.7121347188949585
+      orientation:
+        x: 0.6320468187332153
+        y: 0.6370368003845215
+        z: 0.15737560391426086
+        w: 0.41223040223121643
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 210
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.040261365473270416
+        y: -0.12038632482290268
+        z: 1.738072395324707
+      orientation:
+        x: 0.49115267395973206
+        y: 0.827892541885376
+        z: -0.1257697194814682
+        w: -0.23988522589206696
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 211
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.323652446269989
+        y: -0.5780547857284546
+        z: 1.4663903713226318
+      orientation:
+        x: 0.9315006732940674
+        y: -0.2773175835609436
+        z: -0.060208510607481
+        w: 0.22754418849945068
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 212
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.4310344159603119
+        y: -0.5084187388420105
+        z: 1.4645938873291016
+      orientation:
+        x: 0.7516921162605286
+        y: -0.4964403808116913
+        z: -0.4338988661766052
+        w: 0.015418156050145626
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 213
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.46681350469589233
+        y: -0.3002186119556427
+        z: 1.639164924621582
+      orientation:
+        x: -0.49870118498802185
+        y: 0.7501941323280334
+        z: 0.39356255531311035
+        w: -0.18334245681762695
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 214
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.36728984117507935
+        y: -0.0961814820766449
+        z: 1.6660150289535522
+      orientation:
+        x: -0.0967947244644165
+        y: 0.5861473679542542
+        z: 0.6313517093658447
+        w: -0.49845463037490845
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 215
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.3184663951396942
+        y: -0.02608501724898815
+        z: 1.6122959852218628
+      orientation:
+        x: -0.007137869484722614
+        y: -0.5940428972244263
+        z: -0.5345179438591003
+        w: 0.6011260747909546
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 216
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2898121476173401
+        y: 0.039468370378017426
+        z: 1.5376793146133423
+      orientation:
+        x: -0.007137869484722614
+        y: -0.5940428972244263
+        z: -0.5345179438591003
+        w: 0.6011260747909546
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 217
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.28473976254463196
+        y: -0.0020329132676124573
+        z: 1.6642334461212158
+      orientation:
+        x: -0.6233726143836975
+        y: 0.7574854493141174
+        z: 0.16094228625297546
+        w: -0.10825871676206589
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 218
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.1778416931629181
+        y: -0.2813063859939575
+        z: 1.8428252935409546
+      orientation:
+        x: 0.3013611435890198
+        y: -0.4886225759983063
+        z: 0.7063035368919373
+        w: -0.41420385241508484
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 219
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.007328346371650696
+        y: 0.06142553687095642
+        z: 1.8346716165542603
+      orientation:
+        x: 0.03249753266572952
+        y: 0.5731608867645264
+        z: -0.3420630693435669
+        w: 0.7439243197441101
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 220
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.03324534744024277
+        y: 0.2370697408914566
+        z: 2.16050386428833
+      orientation:
+        x: 0.012019717134535313
+        y: 0.5696428418159485
+        z: -0.3855319619178772
+        w: 0.7257600426673889
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 221
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: 0.044270314276218414
+        y: 0.3992065191268921
+        z: 2.191307306289673
+      orientation:
+        x: 0.41137561202049255
+        y: 0.3911944627761841
+        z: 0.2356710135936737
+        w: 0.7887941598892212
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 222
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.33358508348464966
+        y: -0.22810404002666473
+        z: 1.8054413795471191
+      orientation:
+        x: 0.5188700556755066
+        y: 0.40799960494041443
+        z: 0.47161155939102173
+        w: 0.5847159028053284
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 223
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2470855414867401
+        y: 0.1513533741235733
+        z: 1.8102220296859741
+      orientation:
+        x: 0.6565750241279602
+        y: 0.06780483573675156
+        z: 0.7109502553939819
+        w: 0.2426140457391739
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 224
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.25464731454849243
+        y: 0.3146686255931854
+        z: 2.1491429805755615
+      orientation:
+        x: 0.6544679999351501
+        y: 0.11753330379724503
+        z: 0.6931970119476318
+        w: 0.2780924141407013
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 225
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.22287139296531677
+        y: 0.4788350462913513
+        z: 2.162639617919922
+      orientation:
+        x: 0.5514395833015442
+        y: -0.37570327520370483
+        z: 0.6847870349884033
+        w: -0.2929646372795105
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 226
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2912502586841583
+        y: -0.6461067795753479
+        z: 1.3742057085037231
+      orientation:
+        x: -0.24704228341579437
+        y: 0.6503239274024963
+        z: -0.30626946687698364
+        w: 0.6498059630393982
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 227
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.28651946783065796
+        y: -0.5795602202415466
+        z: 1.2327525615692139
+      orientation:
+        x: -0.24704228341579437
+        y: 0.6503239274024963
+        z: -0.30626946687698364
+        w: 0.6498059630393982
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 228
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2659865617752075
+        y: -0.6298182606697083
+        z: 1.237254023551941
+      orientation:
+        x: 0.2851632237434387
+        y: 0.6345337629318237
+        z: 0.2429169863462448
+        w: 0.6760474443435669
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 229
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.2150491327047348
+        y: -0.6958658695220947
+        z: 1.3281770944595337
+      orientation:
+        x: 0.6503239870071411
+        y: 0.24704228341579437
+        z: 0.6498059034347534
+        w: 0.30626943707466125
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 230
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.3159577250480652
+        y: -0.6202238202095032
+        z: 1.2366929054260254
+      orientation:
+        x: 0.2851632237434387
+        y: 0.6345337629318237
+        z: 0.2429169863462448
+        w: 0.6760474443435669
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
+  -
+    header:
+      seq: 0
+      stamp:
+        secs: 1719565706
+        nsecs: 892131989
+      frame_id: "depth_camera_link"
+    ns: ''
+    id: 231
+    type: 2
+    action: 0
+    pose:
+      position:
+        x: -0.37604865431785583
+        y: -0.6834579110145569
+        z: 1.3297096490859985
+      orientation:
+        x: -0.24704228341579437
+        y: 0.6503239274024963
+        z: -0.30626946687698364
+        w: 0.6498059630393982
+    scale:
+      x: 0.05
+      y: 0.05
+      z: 0.05
+    color:
+      r: 0.0
+      g: 0.0
+      b: 1.0
+      a: 1.0
+    lifetime:
+      secs: 0
+      nsecs: 250000000
+    frame_locked: False
+    points: []
+    colors: []
+    text: ''
+    mesh_resource: ''
+    mesh_use_embedded_materials: False
