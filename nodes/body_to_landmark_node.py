@@ -72,7 +72,6 @@ class BodyToLandmarkNode:
                 return None
 
             action_result = self.lookup_transform_client.get_result()
-            print(action_result)
 
             rotation = Rotation.from_quat(
                 [
@@ -102,6 +101,9 @@ class BodyToLandmarkNode:
         transformation_matrix = self._get_transformation_matrix()
         if transformation_matrix is None:
             rospy.logwarn("No transformation matrix found.")
+            return
+
+        if len(body_msg.markers) == 0:
             return
 
         landmarks = defaultdict(dict)
@@ -135,9 +137,6 @@ class BodyToLandmarkNode:
                 "orientation": dict(zip("xyzw", rotation.as_quat())),
                 "confidence": 1.0,
             }
-
-        for body_id, body in landmarks.items():
-            print(f"{body_id}: {len(body)}")
 
         landmarks = {
             "header": {
