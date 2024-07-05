@@ -28,7 +28,7 @@ import tf2_msgs.msg
 import std_msgs.msg
 import visualization_msgs.msg
 
-from camera_tracking.pykinect_azure_fix import K4ABT_JOINTS
+from camera_tracking.pykinect_azure_add_on import K4ABT_JOINTS
 
 
 class BodyToLandmarkNode:
