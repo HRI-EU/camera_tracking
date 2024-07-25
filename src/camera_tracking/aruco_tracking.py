@@ -361,7 +361,7 @@ class ArucoTracking(BaseTracking):
         # self.aruco_parameters.cornerRefinementMinAccuracy = 0.01  # 0.1
         self.aruco_parameters.minDistanceToBorder = 2
         self.aruco_parameters.minMarkerPerimeterRate = 0.03
-        self.aruco_parameters.maxMarkerPerimeterRate = 0.3
+        self.aruco_parameters.maxMarkerPerimeterRate = 0.5
 
         # We use a default length of 1m, and scale the markers on the receiving side.
         self.default_marker_length = 1.0
