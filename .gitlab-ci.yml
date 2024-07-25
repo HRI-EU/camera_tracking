@@ -64,7 +64,7 @@ mypy:
 
 unit tests:
     stage: test
-    when: manual
+    #when: manual
     script:
         - source venv/bin/activate
         - ./ci-unit-tests.sh
