@@ -31,5 +31,10 @@ source ./venv/bin/activate
 # Upgrade pip.
 pip install --upgrade pip
 
-# Install python requirements using pip.
-pip install --no-cache-dir -r requirements.txt
+if [ "${1:-dummy}" != "--ci-only" ]; then
+    # Install python main requirements using pip.
+    pip install --no-cache-dir -r requirements.txt
+fi
+
+# Install python optional CI requirements using pip.
+pip install --no-cache-dir -r requirements_ci.txt

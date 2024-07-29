@@ -37,9 +37,6 @@ default:
 
 create venv:
     stage: venv
-    before_script:
-        - !reference [.checkout-from-dmz, before_script]
-        - sed --in-place 's|^git+https://dmz-gitlab.honda-ri.de/|git+https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/|g' ./requirements.txt
     script:
         - ./create_venv.sh --ci-only
     artifacts:
@@ -78,9 +75,12 @@ mypy:
 
 unit tests:
     stage: test
-    #when: manual
+    before_script:
+        - !reference [ .checkout-from-dmz, before_script ]
+        - sed --in-place 's|^git+https://dmz-gitlab.honda-ri.de/|git+https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/|g' ./requirements.txt
     script:
         - source venv/bin/activate
+        - ./create_venv.sh
         - ./ci-unit-tests.sh
         - coverage xml
     coverage: '/^TOTAL.+?(\d+\%)$/'
