@@ -24,9 +24,21 @@ variables:
 default:
     image: dmz-gitlab.honda-ri.de:5050/gitlabrunner/buildcontainers/hri-eu-main:latest
 
+.checkout-from-dmz:
+    before_script:
+        - git config --global --add safe.directory '*'
+        - git config --global http.sslVerify "false"
+        - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/robotics/".insteadOf
+          https://github.com/HRI-EU/
+        - git submodule sync --recursive
+        - git submodule update --init --force
+        - git submodule sync --recursive
+        - git submodule update --init --force --recursive
+
 create venv:
     stage: venv
     before_script:
+        - !reference [.checkout-from-dmz, before_script]
         - sed --in-place 's|^git+https://dmz-gitlab.honda-ri.de/|git+https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/|g' ./requirements.txt
     script:
         - ./create_venv.sh --ci-only
