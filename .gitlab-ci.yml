@@ -27,7 +27,6 @@ default:
 create venv:
     stage: venv
     before_script:
-        - !reference [ .checkout-from-dmz, before_script ]
         - sed --in-place 's|^git+https://dmz-gitlab.honda-ri.de/|git+https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/|g' ./requirements.txt
     script:
         - ./create_venv.sh --ci-only
