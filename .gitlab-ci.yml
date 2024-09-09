@@ -18,11 +18,11 @@ stages:
     - test
 
 variables:
-    PIP_INDEX_URL: https://cicd-pkg-reg.honda-ri.de/repository/pypi-proxy/simple
+    PIP_INDEX_URL: https://package-cache.honda-ri.de/repository/pypi-proxy/simple
     REQUESTS_CA_BUNDLE: /usr/local/share/ca-certificates/HRI-CA_cert.crt
 
 default:
-    image: dmz-gitlab.honda-ri.de:5050/gitlabrunner/buildcontainers/hri-eu-main:latest
+    image: dmz-gitlab.honda-ri.de:5050/tech_team/docker/ubuntu2004-hri-main:1.1
 
 .checkout-from-dmz:
     before_script:
