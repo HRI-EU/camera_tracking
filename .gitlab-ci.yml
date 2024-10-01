@@ -19,6 +19,7 @@ stages:
 
 variables:
     PIP_INDEX_URL: https://package-cache.honda-ri.de/repository/pypi-proxy/simple
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
     REQUESTS_CA_BUNDLE: /usr/local/share/ca-certificates/HRI-CA_cert.crt
 
 default:
@@ -29,7 +30,7 @@ default:
         - git config --global --add safe.directory '*'
         - git config --global http.sslVerify "false"
         - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/robotics/".insteadOf
-          https://github.com/HRI-EU/
+            https://github.com/HRI-EU/
         - git submodule sync --recursive
         - git submodule update --init --force
         - git submodule sync --recursive
@@ -38,11 +39,15 @@ default:
 create venv:
     stage: venv
     script:
-        - ./create_venv.sh --ci-only
-    artifacts:
+        - ./create_venv.sh
+    #    artifacts:
+    #        paths:
+    #            - venv
+    #        expire_in: 1h
+    cache:
+        key: $CI_COMMIT_REF_SLUG
         paths:
             - venv
-        expire_in: 1h
 
 bst checks:
     stage: check
@@ -59,12 +64,20 @@ lint:
         paths:
             - pylint.report
         expire_in: 1 hour
+    cache:
+        key: $CI_COMMIT_REF_SLUG
+        paths:
+            - venv
 
 black:
     stage: check
     script:
         - source venv/bin/activate
         - ./ci-format.sh
+    cache:
+        key: $CI_COMMIT_REF_SLUG
+        paths:
+            - venv
 
 mypy:
     stage: check
@@ -72,6 +85,10 @@ mypy:
     script:
         - source venv/bin/activate
         - ./ci-mypy.sh
+    cache:
+        key: $CI_COMMIT_REF_SLUG
+        paths:
+            - venv
 
 unit tests:
     stage: test
@@ -80,7 +97,7 @@ unit tests:
         - sed --in-place 's|^git+https://dmz-gitlab.honda-ri.de/|git+https://gitlab-ci-token:${CI_JOB_TOKEN}@dmz-gitlab.honda-ri.de/|g' ./requirements.txt
     script:
         - source venv/bin/activate
-        - ./create_venv.sh
+#        - ./create_venv.sh
         - ./ci-unit-tests.sh
         - coverage xml
     coverage: '/^TOTAL.+?(\d+\%)$/'
@@ -95,3 +112,7 @@ unit tests:
             - junit-report.xml
             - coverage.xml
         expire_in: 1 hour
+    cache:
+        key: $CI_COMMIT_REF_SLUG
+        paths:
+            - venv
