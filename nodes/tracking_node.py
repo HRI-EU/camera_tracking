@@ -107,7 +107,7 @@ class TrackingNode:
         )
 
         # Initialize subscribers.
-        rospy.Subscriber(self.image_topic, sensor_msgs.msg.Image, self.image_callback, queue_size=2)
+        rospy.Subscriber(self.image_topic, sensor_msgs.msg.Image, self.image_callback, queue_size=1)
 
         rospy.loginfo("Initialization done.")
 
