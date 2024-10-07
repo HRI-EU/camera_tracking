@@ -1,4 +1,4 @@
-git+https://dmz-gitlab.honda-ri.de/robotics/pykinectazure.git@0.0.3
+#git+https://dmz-gitlab.honda-ri.de/robotics/pykinectazure.git@0.0.3
 mediapipe==0.10.3
 zmq==0.0.0
 pyyaml
