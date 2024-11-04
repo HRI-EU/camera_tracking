@@ -6,7 +6,7 @@
 
     <maintainer email="stephan.hasler@honda-ri.de">Stephan Hasler</maintainer>
 
-    <license>No license</license>
+    <license>BSD 3-Clause License</license>
 
     <buildtool_depend>catkin</buildtool_depend>
 
