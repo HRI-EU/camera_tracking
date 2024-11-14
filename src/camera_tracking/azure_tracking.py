@@ -332,10 +332,11 @@ class AzureTracking(BaseCamera):
 
         # Define the device configuration.
         device_config = pykinect.default_configuration
+        # If RGB is unused, we still use the lowest resolution to get a correct depth/RGB calibration.
         device_config.color_resolution = (
             AzureTracking.color_resolution_mapping[color_resolution]
             if (with_aruco or with_mediapipe)
-            else pykinect.K4A_COLOR_RESOLUTION_OFF
+            else pykinect.K4A_COLOR_RESOLUTION_720P
         )
         device_config.depth_mode = (
             AzureTracking.depth_mode_mapping[depth_mode] if with_body else pykinect.K4A_DEPTH_MODE_OFF
