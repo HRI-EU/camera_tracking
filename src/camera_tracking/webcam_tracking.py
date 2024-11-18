@@ -48,12 +48,13 @@ class WebcamTracking(BaseCamera):
         with_mediapipe: bool = True,
         visualize: bool = True,
         frame_id: str = "",
+        device_id: int = 0,
     ):
         super().__init__(frame_id=frame_id)
 
         camera_parameters = load_camera_parameters(camera_config_file)
 
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(device_id)
         # Depends on fourcc available camera.
         self.capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc("M", "J", "P", "G"))
         self.capture.set(cv2.CAP_PROP_FPS, camera_parameters["frames_per_second"])

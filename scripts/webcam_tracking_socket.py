@@ -62,6 +62,8 @@ class WebcamTrackingSocket:
             choices=["error", "warning", "info", "debug"],
             help="the logging level",
         )
+        parser.add_argument("--device_id", type=int, default=0, help="Camera device id")
+
         args = parser.parse_args()
 
         logging.basicConfig(format="%(levelname)s: %(message)s", level=args.log_level.upper())
@@ -72,6 +74,7 @@ class WebcamTrackingSocket:
             with_mediapipe=args.mediapipe,
             visualize=args.visualize,
             frame_id=args.frame_id,
+            device_id=args.device_id,
         )
         self.standalone = args.standalone
 
